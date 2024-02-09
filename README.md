@@ -40,3 +40,8 @@ https://kaggle.com/datasets/jsphyg/weather-dataset-rattle-package
 
 https://github.com/tonywr71/GeoJson-Data
 
+
+## Presentation
+
+Each member will explain there part (how data was cleaned, how charts were made, website details and website demo)
+
