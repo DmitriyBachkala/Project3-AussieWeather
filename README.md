@@ -7,7 +7,7 @@ Project Proposal
 ##Interaction
 Dropdown to select month
 
-##Proposed Monthly Visualizations (charts will update based on selected month):
+## Proposed Monthly Visualizations (charts will update based on selected month):
 
 Rainfall (Info chart) -Erica
 Humidity (Bar chart) -Daniel
@@ -15,14 +15,14 @@ Wind speed (Bar chart) -Daniel
 Choropleth and info marks map (Azure Maps Leaflet plugin) -Dmitriy
 
 
-##We will use:
+## We will use:
 
 PostgreSQL
 JavaScript
 html
 
 
-##Dataset: 
+## Dataset: 
 https://kaggle.com/datasets/jsphyg/weather-dataset-rattle-package
 
 https://github.com/tonywr71/GeoJson-Data
