@@ -4,6 +4,15 @@
 Project Proposal
 
 
+## Dataset: 
+https://kaggle.com/datasets/jsphyg/weather-dataset-rattle-package
+
+https://github.com/tonywr71/GeoJson-Data
+
+## Data cleaning
+file: WeatherAUS.csv -David
+
+
 ## Interaction
 Dropdown to select month
 
