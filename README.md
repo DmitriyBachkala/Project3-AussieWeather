@@ -4,7 +4,7 @@
 Project Proposal
 
 
-##Interaction
+## Interaction
 Dropdown to select month
 
 ## Proposed Monthly Visualizations (charts will update based on selected month):
