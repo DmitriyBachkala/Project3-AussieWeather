@@ -1,8 +1,8 @@
 # Project3-AussieWeather
 
+## "What is the optimal timing for travel? This is the question we'll address for those planning a trip to Australia."
 Project Proposal
 
-## "What is the optimal timing for travel? This is the question we'll address for those planning a trip to Australia."
 
 ##Interaction
 Dropdown to select month
