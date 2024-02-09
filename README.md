@@ -24,7 +24,7 @@ Humidity (Bar chart) -Daniel
 
 Wind speed (Bar chart) -Daniel
 
-Choropleth and info marks map (Azure Maps Leaflet plugin) -Dmitriy
+Choropleth and/or info marks map (Leaflet Coordinates Projection Plugin) -Dmitriy
 
 
 
