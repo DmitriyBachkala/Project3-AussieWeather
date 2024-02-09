@@ -10,9 +10,13 @@ Dropdown to select month
 ## Proposed Monthly Visualizations (charts will update based on selected month):
 
 Rainfall (Info chart) -Erica
+
 Humidity (Bar chart) -Daniel
+
 Wind speed (Bar chart) -Daniel
+
 Choropleth and info marks map (Azure Maps Leaflet plugin) -Dmitriy
+
 
 
 ## We will use:
