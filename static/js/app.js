@@ -1,15 +1,21 @@
-// Get the url endpoint
-const samples = "https://2u-data-curriculum-team.s3.amazonaws.com/dataviz-classroom/v1.1/14-Interactive-Web-Visualizations/02-Homework/samples.json";
+// Get data paths
+const location_summary = "../Data/location_summary.csv";
+const locationData = "../Data/location.csv";
+const RainyDays = "../Data/RainyDays.csv";
+const state_summary = "../Data/state_summary.csv";
+
 let data = {}
-// Fetch the JSON data and console log it
-d3.json(samples).then(function(result) {
-  data = result
-    console.log(data);
-    updateDropdown()
-  });
+
+// Fetch the JSON data (with d3.csv) and console log it
+d3.csv(state_summary).then(function(result) {
+  data = result;
+  console.log(data);
+  updateDropdown(); // Call the function after data is fetched
+});
 
 // Create functions
 function updateDropdown() {
+  console.log("Dropdown updated!"); // Log a message to indicate the dropdown update
   const dropdownMenu = d3.select("#selDataset");
 
   // Array of month names
@@ -28,109 +34,128 @@ function updateDropdown() {
   populateBarChart(months[0]);
 }
 
-// Call updateDropdown() initially 
-updateDropdown();
 
-function populateMetadata(selectedID) {
-  // Add data to panel
-  d3.json(samples).then((data) => {
-    let metadata = data.metadata;
-    let value = metadata.find(result => result.id == selectedID);
 
-    // Check if a matching value is found
-    if (value) {
-      // Clear existing content in the panel
-      d3.select("#sample-metadata").html("");
 
-      // Log the individual key/value pairs as they are being appended to the metadata panel
-      for (const [key, val] of Object.entries(value)) {
-        console.log(key, val);
-        d3.select("#sample-metadata").append("h5").text(`${key}: ${val}`);
-      }
-      console.log(selectedID);
-    } else {
-      // Handle the case where no matching ID is found
-      console.log(`No data found for ID: ${selectedID}`);
-    }
-  });
-}
 
-function populateBarChart(id) {
-  // Create a horizontal bar chart with a dropdown menu to display the top 10 OTUs found in that individual
-  d3.json(samples).then((data) => {
-    let selecteddata = data.samples;
-    let value = selecteddata.find(results => results.id === id);
-    let valuedata = value;
-    let otuLabels = valuedata.otu_labels;
-    let otuIDs = valuedata.otu_ids;
-    let sampleValues = valuedata.sample_values;
-    let yticks = otuIDs.slice(0, 10).map(id => `OTU ${id}`).reverse();
-    let xticks = sampleValues.slice(0, 10).reverse();
-    let labels = otuLabels.slice(0, 10).reverse();
+// // Call updateDropdown() initially 
+// updateDropdown();
 
-    // Trace for the microbial Data
-    let trace1 = {
-      x: xticks,
-      y: yticks,
-      type: "bar",
-      text: labels,
-      orientation: "h"
-    };
+// function populateMetadata(selectedID) {
+//   // Add data to panel
+//   d3.json(samples).then((data) => {
+//     let metadata = data.metadata;
+//     let value = metadata.find(result => result.id == selectedID);
 
-    let layout = {
-      title: `Top 10 OTUs for Individual ${id}`,
-      xaxis: { title: 'Sample Values' },
-      yaxis: { title: 'OTU ID' }
-    };
+//      // Check if a matching value is found
+//      if (value) {
+//       // Clear existing content in the panel
+//       d3.select("#sample-metadata").html("");
 
-    // Use Plotly to create the bar chart
-    Plotly.newPlot("bar", [trace1], layout);
-  });
+//       // Create a container for the grid
+//       const gridContainer = d3.select("#sample-metadata").append("div").classed("grid-container", true);
 
-  console.log(id);
-}
+//       // Log the individual key/value pairs as they are being appended to the metadata panel
+//       let counter = 0;
+//       for (const [key, val] of Object.entries(value)) {
+//         console.log(key, val);
 
-function populateBubbleChart(id) {
-  // Create a bubble chart with a dropdown menu to display the OTUs found in that individual
-   d3.json(samples).then((data) => {
-    let selecteddata = data.samples;
-    let value = selecteddata.find(results => results.id === id);
-    let valuedata = value;
-    let otuLabels = valuedata.otu_labels;
-    let otuIDs = valuedata.otu_ids;
-    let sampleValues = valuedata.sample_values;
+//         // Create a new grid item for each key-value pair
+//         const gridItem = gridContainer.append("div").classed("grid-item", true);
 
-    // Trace for the microbial Data
-    let trace1 = {
-      x: otuIDs,
-      y: sampleValues,
-      mode: 'markers',
-      marker: {
-        size: sampleValues,
-        color: otuIDs,
-        colorscale: 'Viridis',
-        opacity: 0.7
-      },
-      text: otuLabels
-    };
+//         // Append the key and value as text to the grid item
+//         gridItem.append("h5").text(`${key}: ${val}`);
 
-    let layout = {
-      title: `Bubble Chart for Individual ${id}`,
-      xaxis: { title: 'OTU ID' },
-      yaxis: { title: 'Sample Values' }
-    };
+//         // Increase the counter
+//         counter++;
 
-    // Use Plotly to create the bubble chart
-    Plotly.newPlot("bubble", [trace1], layout);
-  });
+//         // Break the loop if we've reached four key-value pairs
+//         if (counter === 4) break;
+//       }
+//       console.log(selectedID);
+//     } else {
+//       // Handle the case where no matching ID is found
+//       console.log(`No data found for ID: ${selectedID}`);
+//     }
+//   });
+// }
 
-  console.log(id);
-}
+// function populateBarChart(id) {
+//   // Create a horizontal bar chart with a dropdown menu to display the top 10 OTUs found in that individual
+//   d3.json(samples).then((data) => {
+//     let selecteddata = data.samples;
+//     let value = selecteddata.find(results => results.id === id);
+//     let valuedata = value;
+//     let otuLabels = valuedata.otu_labels;
+//     let otuIDs = valuedata.otu_ids;
+//     let sampleValues = valuedata.sample_values;
+//     let yticks = otuIDs.slice(0, 10).map(id => `OTU ${id}`).reverse();
+//     let xticks = sampleValues.slice(0, 10).reverse();
+//     let labels = otuLabels.slice(0, 10).reverse();
 
- function optionChanged(id) {
-  populateMetadata(id)
-  populateBarChart(id)
-  populateBubbleChart(id)
-  console.log(id);
- };
+//     // Trace for the microbial Data
+//     let trace1 = {
+//       x: xticks,
+//       y: yticks,
+//       type: "bar",
+//       text: labels,
+//       orientation: "h"
+//     };
+
+//     let layout = {
+//       title: `Top 10 OTUs for Individual ${id}`,
+//       xaxis: { title: 'Sample Values' },
+//       yaxis: { title: 'OTU ID' }
+//     };
+
+//     // Use Plotly to create the bar chart
+//     Plotly.newPlot("bar", [trace1], layout);
+//   });
+
+//   console.log(id);
+// }
+
+// function populateBubbleChart(id) {
+//   // Create a bubble chart with a dropdown menu to display the OTUs found in that individual
+//    d3.json(samples).then((data) => {
+//     let selecteddata = data.samples;
+//     let value = selecteddata.find(results => results.id === id);
+//     let valuedata = value;
+//     let otuLabels = valuedata.otu_labels;
+//     let otuIDs = valuedata.otu_ids;
+//     let sampleValues = valuedata.sample_values;
+
+//     // Trace for the microbial Data
+//     let trace1 = {
+//       x: otuIDs,
+//       y: sampleValues,
+//       mode: 'markers',
+//       marker: {
+//         size: sampleValues,
+//         color: otuIDs,
+//         colorscale: 'Viridis',
+//         opacity: 0.7
+//       },
+//       text: otuLabels
+//     };
+
+//     let layout = {
+//       title: `Bubble Chart for Individual ${id}`,
+//       xaxis: { title: 'OTU ID' },
+//       yaxis: { title: 'Sample Values' }
+//     };
+
+//     // Use Plotly to create the bubble chart
+//     Plotly.newPlot("bubble", [trace1], layout);
+//   });
+
+//   console.log(id);
+// }
+
+//  function optionChanged(id) {
+//   populateMetadata(id)
+//   populateBarChart(id)
+//   populateBubbleChart(id)
+//   console.log(id);
+//  };
 
