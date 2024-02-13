@@ -12,20 +12,20 @@ d3.json(samples).then(function(result) {
 function updateDropdown() {
   const dropdownMenu = d3.select("#selDataset");
 
-  let names = data.names;
+  // Array of month names
+  const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
   // Clear existing options
   dropdownMenu.html("");
 
-  // Iterate over names to create options
-  names.forEach(id => {
-    dropdownMenu.append("option").text(id).property("value", id);
+  // Iterate over months to create options
+  months.forEach(month => {
+    dropdownMenu.append("option").text(month).property("value", month);
   });
 
-  // Automatically populate with the first ID
-  optionChanged(names[0]);
-  populateBarChart(names[0]);
-
+  // Automatically populate with the first month
+  optionChanged(months[0]);
+  populateBarChart(months[0]);
 }
 
 // Call updateDropdown() initially 
