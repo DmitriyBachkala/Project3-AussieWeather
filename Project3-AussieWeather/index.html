@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Bellybutton Biodiversity</title>
+  <title>Fun Times in Australia!</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <link rel="stylesheet" href="static/css/style.css">
 </head>
@@ -24,19 +24,22 @@
         <div class="well">
           <h5>Select Your Month of Travel:</h5>
           <select id="selDataset" onchange="optionChanged(this.value)"></select>
-        </div>
-        <div class="panel panel-primary">
-          <div class="panel-heading">
-            <h3 class="panel-title">Days and Months</h3>
-          </div>
-          <div id="sample-metadata" class="panel-body"></div>
-        </div>
-        <div class="panel panel-primary">
-          <div class="panel-heading">
-            <h3 class="panel-title">Days</h3>
-          </div>
-          <div id="sample-metadata" class="panel-body"></div>
-        </div>
+        </div>       
+        <table id="myTable" class="table table-borderless table-striped table-earning">
+          <caption>Average Monthly Precipitation</caption>
+          <thead>
+            <tr class = "table-headers">
+              <th class="col1">Days</th>
+              <th class="col2">Location</th>
+              <th class="col3">Inches</th>
+              <th class="col4">Millimetres</th>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+      </div>
+    </div>
       </div>
       <div class="col-md-5">
         <div id="bar"></div>
