@@ -38,7 +38,7 @@ updateDropdown();
 function populateData(selectedMonth) {
   // Add data to panel
   d3.json(RainyDays).then((data) => {
-    // console.log(data);
+     //console.log(data);
     let months = data.filter(process => process.Month === selectedMonth);
     // console.log(months);
   
@@ -55,12 +55,14 @@ function populateData(selectedMonth) {
 
     // Add data to panel for states
     d3.json(state_summary).then((data) => {
+     
       let months = data.filter(state => state.Month === selectedMonth);
-      let body = d3.select("#state-table tbody");
+      let body = d3.select("#statetable tbody");
       body.html("");
       for (let i = 0; i < months.length; i++){
+        console.log(data);
         let row = body.append('tr');
-        row.append('td').text(months[i].state);
+        row.append('td').text(months[i].State);
         row.append('td').text(months[i].Avg_MaxTemp);
         row.append('td').text(months[i].Avg_MinTemp); 
         // Add more columns as needed
