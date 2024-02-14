@@ -214,3 +214,38 @@ function optionChanged(id, type) {
   console.log(id);
 };
 
+// Leaflet Map Initialization
+function initMap() {
+  // Initialize map
+  const map = L.map('map').setView([-25.2744, 133.7751], 4);
+
+  // Add a tile layer
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+  }).addTo(map);
+}
+
+// Call initMap() after the DOM has loaded
+document.addEventListener('DOMContentLoaded', function() {
+  initMap();
+});
+
+// Fetch the location summary data for markers
+d3.json("../Data/location_summary.json").then(function(locations) {
+// Iterate over the locations
+locations.forEach(function(location) {
+    // Extract relevant information
+    var name = location.Location;
+    var latitude = parseFloat(location.Latitude);
+    var longitude = parseFloat(location.Longitude);
+    var minTemp = location.Avg_MinTemp.toFixed(2);
+    var maxTemp = location.Avg_MaxTemp.toFixed(2);
+
+    // Create a marker with a popup containing temperature information
+    var marker = L.marker([latitude, longitude])
+        .bindPopup("Location: " + name + "<br> Avg Min Temp: " + minTemp + "°C<br> Avg Max Temp: " + maxTemp + "°C")
+        .addTo(map);
+});
+});
+
+
