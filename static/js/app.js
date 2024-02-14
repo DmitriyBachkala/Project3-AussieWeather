@@ -2,7 +2,7 @@
 const location_summary = "../Data/location_summary.csv";
 const locationData = "../Data/location.csv";
 const RainyDays = "/Data/rainydays.json";
-const state_summary = "../Data/state_summary.csv";
+const state_summary = "/Data/state_summary.json";
 
 let data = {}
 
@@ -52,6 +52,22 @@ function populateData(selectedMonth) {
       row.append('td').text(months[i].TotalRainfallPerYear_mm);
           }
   });
+
+    // Add data to panel for states
+    d3.json(state_summary).then((data) => {
+      let months = data.filter(state => state.Month === selectedMonth);
+      let body = d3.select("#state-table tbody");
+      body.html("");
+      for (let i = 0; i < months.length; i++){
+        let row = body.append('tr');
+        row.append('td').text(months[i].state);
+        row.append('td').text(months[i].Avg_MaxTemp);
+        row.append('td').text(months[i].Avg_MinTemp); 
+        // Add more columns as needed
+      }
+    });
+
+
 }
 function optionChanged(id) {
   populateData(id)
