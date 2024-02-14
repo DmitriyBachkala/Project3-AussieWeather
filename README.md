@@ -15,6 +15,7 @@ file: WeatherAUS.csv
 
 ## Interaction
 Dropdown to select month
+Visualizations will update to reflect the data for the selected month
 
 ## Proposed Monthly Visualizations (charts will update based on selected month):
 
@@ -47,6 +48,9 @@ https://github.com/tonywr71/GeoJson-Data
 
 
 ## Presentation
-
 Each member will explain there part (how data was cleaned, how charts were made, website details and website demo)
+
+**#Ethical Consideration**
+This project contains data regarding the weather of different locations (mostly cities) in Australia. 
+Due to the lack of personal information there are limited ethical considerations regarding the data and the resulting analysis.
 
