@@ -8,6 +8,13 @@
   <title>Fun Times in Australia!</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <link rel="stylesheet" href="static/css/style.css">
+   <!-- Leaflet CSS -->
+   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+   <style>
+     #map {
+       height: 400px;
+     }
+   </style>
 </head>
 
 <body>
@@ -154,22 +161,15 @@
       </table>
     </div>
   </div>
-
+  <!-- Leaflet Map Container -->
+  
  
   </div>
 
   <script src="https://d3js.org/d3.v7.min.js"></script>
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
   <script src="./static/js/app.js"></script>
-    <!-- Leaflet JavaScript -->
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-    <script>
-      // Initialize the Leaflet map
-      var map = L.map('map').setView([-27, 133], 4);
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-      }).addTo(map);
-    </script>
+ 
 </body>
 
 </html>
