@@ -19,6 +19,7 @@
         <p>When is the best time of year for your adventure downunder?</p>
       </div>
     </div>
+    <!-- Rain -->
     <div class="row">
       <div class="col-md-4">
         <div class="well">
@@ -36,13 +37,13 @@
     <div class="row">
       <div class="col-md-6">
         <table id="locTableRain" class="table table-borderless table-striped table-earning">
-          <caption>Average Monthly Precipitation</caption>
+          <caption>Average Monthly Precipitation Location</caption>
           <thead>
             <tr class="table-headers">
-              <th >Location</th>
-              <th >Days</th>
-              <th >Inches</th>
-              <th >Millimetres</th>
+              <th>Location</th>
+              <th>Days</th>
+              <th>Inches</th>
+              <th>Millimetres</th>
             </tr>
           </thead>
           <tbody id="locTableBodyRain"></tbody>
@@ -50,7 +51,7 @@
       </div>
       <div class="col-md-6">
         <table id="stateTableRain" class="table table-borderless table-striped table-earning">
-          <caption>State Data</caption>
+          <caption>Average Monthly Precipitation State</caption>
           <thead>
             <tr class="table-headers">
               <th>State</th>
@@ -62,6 +63,68 @@
         </table>
       </div>
     </div>
+      <!-- Temp -->
+    <div class="row">
+      <div class="col-md-6">
+        <table id="locTableTemp" class="table table-borderless table-striped table-earning">
+          <caption>Average Monthly Temperature Location</caption>
+          <thead>
+            <tr class="table-headers">
+              <th>Location</th>
+              <th>Min Temp (°C)</th>
+              <th>Max Temp (°C)</th>
+              <th>Min Temp (°F)</th>
+              <th>Max Temp (°F)</th>
+            </tr>
+          </thead>
+          <tbody id="locTableBodyTemp"></tbody>
+        </table>
+      </div>
+      <div class="col-md-6">
+        <table id="stateTableTemp" class="table table-borderless table-striped table-earning">
+          <caption>Average Monthly Temperature State</caption>
+          <thead>
+            <tr class="table-headers">
+              <th>State</th>
+              <th>Min Temp (°C)</th>
+              <th>Max Temp (°C)</th> 
+            </tr>
+          </thead>
+          <tbody id="stateTableBodyTemp"></tbody>
+        </table>
+      </div>
+    </div>
+
+   <!-- Wind -->
+   <div class="row">
+    <div class="col-md-6">
+      <table id="locTableWind" class="table table-borderless table-striped table-earning">
+        <caption>Average Monthly Strongest Windspeed Location</caption>
+        <thead>
+          <tr class="table-headers">
+            <th>Location</th>
+            <th>Speed (km/h)</th>
+            <th>Speed (mph)</th> 
+          </tr>
+        </thead>
+        <tbody id="locTableBodyWind"></tbody>
+      </table>
+    </div>
+    <div class="col-md-6">
+      <table id="stateTableWind" class="table table-borderless table-striped table-earning">
+        <caption>Average Monthly Strongest Windspeed State</caption>
+        <thead>
+          <tr class="table-headers">
+            <th>State</th>
+            <th>Speed (km/h)</th>
+            <th>Speed (mph)</th> 
+          </tr>
+        </thead>
+        <tbody id="stateTableBodyWind"></tbody>
+      </table>
+    </div>
+  </div>
+
     <div class="row">
       <div class="col-md-5">
         <div id="bar"></div>
