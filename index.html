@@ -1,8 +1,3 @@
-
-Here's the HTML code with the two tables placed side by side:
-
-html
-Copy code
 <!DOCTYPE html>
 <html lang="en">
 
@@ -25,23 +20,32 @@ Copy code
       </div>
     </div>
     <div class="row">
-      <div class="col-md-6">
+      <div class="col-md-4">
         <div class="well">
           <h5>Select Your Month of Travel:</h5>
           <select id="selDataset" onchange="optionChanged(this.value)"></select>
         </div>
-        <table id="myTable" class="table table-borderless table-striped table-earning">
+      </div>
+      <div class="col-md-4">
+        <div class="well">
+          <h5>Select Weather Type:</h5>
+          <select id="selWeatherType" onchange="weatherTypeChanged(this.value)"></select>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <table id="locTable" class="table table-borderless table-striped table-earning">
           <caption>Average Monthly Precipitation</caption>
           <thead>
             <tr class="table-headers">
-              <th class="col1">Days</th>
-              <th class="col2">Location</th>
-              <th class="col3">Inches</th>
-              <th class="col4">Millimetres</th>
+              <th >Location</th>
+              <th >Days</th>
+              <th >Inches</th>
+              <th >Millimetres</th>
             </tr>
           </thead>
-          <tbody>
-          </tbody>
+          <tbody id="locTableBody"></tbody>
         </table>
       </div>
       <div class="col-md-6">
@@ -50,10 +54,8 @@ Copy code
           <thead>
             <tr class="table-headers">
               <th>State</th>
-              <th>Avg_MinTemp</th>
-              <th>Avg_MaxTemp</th>
-              <th>Avg_RainFall</th>
-              <!-- Add other column headers as needed -->
+              <th>Inches</th>
+              <th>Millimetres</th>
             </tr>
           </thead>
           <tbody id="stateTableBody"></tbody>

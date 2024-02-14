@@ -16,20 +16,25 @@ d3.csv(state_summary).then(function (result) {
 // Create functions
 function updateDropdown() {
   const dropdownMenu = d3.select("#selDataset");
-
+  const dropdownWeatherType = d3.select("#selWeatherType");
   // Array of month names
   const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-
+  const weatherType = ["Rain","Wind","Sun"]
   // Clear existing options
   dropdownMenu.html("");
-
+  dropdownWeatherType.html("");
   // Iterate over months to create options
   months.forEach(month => {
     dropdownMenu.append("option").text(month).property("value", month);
   });
 
+  weatherType.forEach(type => {
+    dropdownWeatherType.append("option").text(type).property("value", type);
+  });
+
   // Automatically populate with the first month
   optionChanged(months[0]);
+  //weatherTypeChanged(weatherType[0]);
 }
 
 // Call updateDropdown() initially 
@@ -42,13 +47,13 @@ function populateData(selectedMonth) {
     let months = data.filter(process => process.Month === selectedMonth);
     // console.log(months);
   
-  let body = d3.select("tbody");
+  let body = d3.select("#locTableBody");
     body.html("");
     for (let i = 0; i < months.length; i++){
       let row = body.append('tr');
-      row.append('td').text(months[i].RainyDaysPerYear);
       row.append('td').text(months[i].Location);
-      row.append('td').text(months[i].TotalRainfall_inch);
+      row.append('td').text(months[i].RainyDaysPerYear);
+      row.append('td').text(months[i].TotalRainfallPerYear_inch);
       row.append('td').text(months[i].TotalRainfallPerYear_mm);
           }
   });
@@ -61,8 +66,7 @@ function populateData(selectedMonth) {
       for (let i = 0; i < months.length; i++){
         let row = body.append('tr');
         row.append('td').text(months[i].State);
-        row.append('td').text(months[i].Avg_MaxTemp.toFixed(2)); // Round to 2 decimal places
-        row.append('td').text(months[i].Avg_MinTemp.toFixed(2)); // Round to 2 decimal places
+        row.append('td').text((months[i].Avg_Rainfall * 0.0393701).toFixed(2)); // Convert mm to inches and round to 2 decimal places
         row.append('td').text(months[i].Avg_Rainfall.toFixed(2)); // Round to 2 decimal places
         // Add more columns as needed
       }
