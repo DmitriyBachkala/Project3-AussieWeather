@@ -23,19 +23,19 @@
       <div class="col-md-4">
         <div class="well">
           <h5>Select Your Month of Travel:</h5>
-          <select id="selDataset" onchange="optionChanged(this.value)"></select>
+          <select id="selDataset" onchange="optionChanged(this.value, document.getElementById('selWeatherType').value)"></select>
         </div>
       </div>
       <div class="col-md-4">
         <div class="well">
           <h5>Select Weather Type:</h5>
-          <select id="selWeatherType" onchange="weatherTypeChanged(this.value)"></select>
+          <select id="selWeatherType" onchange="optionChanged(document.getElementById('selDataset').value, this.value)"></select>
         </div>
       </div>
     </div>
     <div class="row">
       <div class="col-md-6">
-        <table id="locTable" class="table table-borderless table-striped table-earning">
+        <table id="locTableRain" class="table table-borderless table-striped table-earning">
           <caption>Average Monthly Precipitation</caption>
           <thead>
             <tr class="table-headers">
@@ -45,11 +45,11 @@
               <th >Millimetres</th>
             </tr>
           </thead>
-          <tbody id="locTableBody"></tbody>
+          <tbody id="locTableBodyRain"></tbody>
         </table>
       </div>
       <div class="col-md-6">
-        <table id="stateTable" class="table table-borderless table-striped table-earning">
+        <table id="stateTableRain" class="table table-borderless table-striped table-earning">
           <caption>State Data</caption>
           <thead>
             <tr class="table-headers">
@@ -58,7 +58,7 @@
               <th>Millimetres</th>
             </tr>
           </thead>
-          <tbody id="stateTableBody"></tbody>
+          <tbody id="stateTableBodyRain"></tbody>
         </table>
       </div>
     </div>

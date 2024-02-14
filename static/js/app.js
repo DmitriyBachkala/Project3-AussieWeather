@@ -4,8 +4,6 @@ const locationData = "../Data/location.csv";
 const RainyDays = "/Data/rainydays.json";
 const state_summary = "/Data/state_summary.json";
 
-let data = {};
-
 let weatherType = "Rain"; // Initialize weatherType with "Rain"
 
 // Fetch the JSON data (with d3.csv) and console log it
@@ -36,7 +34,8 @@ function updateDropdown() {
 
   // Automatically populate with the first month
   optionChanged(months[0]);
-  //weatherTypeChanged(weatherType[0]);
+  // Set the default weather type to "Rain" when the page loads
+  dropdownWeatherType.node().value = "Rain";
 
   // Event listener for weather type dropdown
   dropdownWeatherType.on("change", function() {
@@ -48,12 +47,12 @@ function updateDropdown() {
 // Call updateDropdown() initially 
 updateDropdown();
 
-function populateData(selectedMonth) {
-  // Add data to panel if weatherType is "Rain"
+function populateData(selectedMonth, weatherType) {
   if (weatherType === "Rain") {
+    // Show rain tables and populate rain data
     d3.json(RainyDays).then((data) => {
       let months = data.filter(process => process.Month === selectedMonth);
-      let body = d3.select("#locTableBody");
+      let body = d3.select("#locTableBodyRain");
       body.html("");
       months.forEach(month => {
         let row = body.append('tr');
@@ -63,53 +62,43 @@ function populateData(selectedMonth) {
         row.append('td').text(month.TotalRainfallPerYear_mm);
       });
     });
-  }
 
-  // Add data to panel for states
-  d3.json(state_summary).then((data) => {
-    let months = data.filter(state => state.Month === selectedMonth);
-    let body = d3.select("#stateTableBody");
-    body.html("");
-    months.forEach(month => {
-      let row = body.append('tr');
-      row.append('td').text(month.State);
-      row.append('td').text((month.Avg_Rainfall * 0.0393701).toFixed(2)); // Convert mm to inches and round to 2 decimal places
-      row.append('td').text(month.Avg_Rainfall.toFixed(2)); // Round to 2 decimal places
-      // Add more columns as needed
-    });
-  });
-
-    if (weatherType === "Temp") {
-    d3.json(RainyDays).then((data) => {
-      let months = data.filter(process => process.Month === selectedMonth);
-      let body = d3.select("#locTableBody");
+    d3.json(state_summary).then((data) => {
+      let months = data.filter(state => state.Month === selectedMonth);
+      let body = d3.select("#stateTableBodyRain");
       body.html("");
       months.forEach(month => {
         let row = body.append('tr');
-        row.append('td').text(month.Location);
-        row.append('td').text(month.RainyDaysPerYear);
-        row.append('td').text(month.TotalRainfallPerYear_inch);
-        row.append('td').text(month.TotalRainfallPerYear_mm);
+        row.append('td').text(month.State);
+        row.append('td').text((month.Avg_Rainfall * 0.0393701).toFixed(2)); // Convert mm to inches and round to 2 decimal places
+        row.append('td').text(month.Avg_Rainfall.toFixed(2)); // Round to 2 decimal places
+        // Add more columns as needed
       });
     });
-  }
 
-  // Add data to panel for states
-  d3.json(state_summary).then((data) => {
-    let months = data.filter(state => state.Month === selectedMonth);
-    let body = d3.select("#stateTableBody");
-    body.html("");
-    months.forEach(month => {
-      let row = body.append('tr');
-      row.append('td').text(month.State);
-      row.append('td').text((month.Avg_Rainfall * 0.0393701).toFixed(2)); // Convert mm to inches and round to 2 decimal places
-      row.append('td').text(month.Avg_Rainfall.toFixed(2)); // Round to 2 decimal places
-      // Add more columns as needed
-    });
-  });
+    // Hide temperature tables
+    d3.select("#locTableTemp").style("display", "none");
+    d3.select("#stateTableTemp").style("display", "none");
+    
+    // Show rain tables
+    d3.select("#locTableRain").style("display", "block");
+    d3.select("#stateTableRain").style("display", "block");
+  } else if (weatherType === "Temp") {
+    // Show temperature tables and populate temperature data
+    // Implement this part according to how you fetch and populate temperature data
+
+    // Hide rain tables
+    d3.select("#locTableRain").style("display", "none");
+    d3.select("#stateTableRain").style("display", "none");
+
+    // Show temperature tables
+    d3.select("#locTableTemp").style("display", "block");
+    d3.select("#stateTableTemp").style("display", "block");
+  }
 }
 
-function optionChanged(id) {
-  populateData(id)
+function optionChanged(id, type) {
+  populateData(id, type)
   console.log(id);
 };
+
