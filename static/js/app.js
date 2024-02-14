@@ -55,16 +55,15 @@ function populateData(selectedMonth) {
 
     // Add data to panel for states
     d3.json(state_summary).then((data) => {
-     
       let months = data.filter(state => state.Month === selectedMonth);
-      let body = d3.select("#statetable tbody");
+      let body = d3.select("#stateTableBody");
       body.html("");
       for (let i = 0; i < months.length; i++){
-        console.log(data);
         let row = body.append('tr');
         row.append('td').text(months[i].State);
-        row.append('td').text(months[i].Avg_MaxTemp);
-        row.append('td').text(months[i].Avg_MinTemp); 
+        row.append('td').text(months[i].Avg_MaxTemp.toFixed(2)); // Round to 2 decimal places
+        row.append('td').text(months[i].Avg_MinTemp.toFixed(2)); // Round to 2 decimal places
+        row.append('td').text(months[i].Avg_Rainfall.toFixed(2)); // Round to 2 decimal places
         // Add more columns as needed
       }
     });

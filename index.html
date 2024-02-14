@@ -1,3 +1,8 @@
+
+Here's the HTML code with the two tables placed side by side:
+
+html
+Copy code
 <!DOCTYPE html>
 <html lang="en">
 
@@ -20,15 +25,15 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-md-2">
+      <div class="col-md-6">
         <div class="well">
           <h5>Select Your Month of Travel:</h5>
           <select id="selDataset" onchange="optionChanged(this.value)"></select>
-        </div>       
+        </div>
         <table id="myTable" class="table table-borderless table-striped table-earning">
           <caption>Average Monthly Precipitation</caption>
           <thead>
-            <tr class = "table-headers">
+            <tr class="table-headers">
               <th class="col1">Days</th>
               <th class="col2">Location</th>
               <th class="col3">Inches</th>
@@ -38,6 +43,8 @@
           <tbody>
           </tbody>
         </table>
+      </div>
+      <div class="col-md-6">
         <table id="stateTable" class="table table-borderless table-striped table-earning">
           <caption>State Data</caption>
           <thead>
@@ -45,6 +52,7 @@
               <th>State</th>
               <th>Avg_MinTemp</th>
               <th>Avg_MaxTemp</th>
+              <th>Avg_RainFall</th>
               <!-- Add other column headers as needed -->
             </tr>
           </thead>
@@ -52,7 +60,7 @@
         </table>
       </div>
     </div>
-      </div>
+    <div class="row">
       <div class="col-md-5">
         <div id="bar"></div>
       </div>
@@ -71,11 +79,6 @@
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
   <script src="./static/js/app.js"></script>
   <!-- <script src="./static/js/bonus.js"></script> -->
-
-</body>
-
-</html>
-
 
 </body>
 
