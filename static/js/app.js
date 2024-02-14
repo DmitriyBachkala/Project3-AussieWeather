@@ -19,7 +19,7 @@ function updateDropdown() {
   const dropdownWeatherType = d3.select("#selWeatherType");
   // Array of month names
   const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-  const weatherTypes = ["Rain","Temp","Wind"]
+  const weatherTypes = ["Rain","Temp","Wind", "Humidity"]
   // Clear existing options
   dropdownMenu.html("");
   dropdownWeatherType.html("");
@@ -81,7 +81,8 @@ function populateData(selectedMonth, weatherType) {
     d3.select("#stateTableTemp").style("display", "none");
     d3.select("#locTableWind").style("display", "none");
     d3.select("#stateTableWind").style("display", "none");
-    
+    d3.select("#locTableHum").style("display", "none");
+    d3.select("#stateTableHum").style("display", "none");
     // Show rain tables
     d3.select("#locTableRain").style("display", "block");
     d3.select("#stateTableRain").style("display", "block");
@@ -121,6 +122,8 @@ function populateData(selectedMonth, weatherType) {
     d3.select("#stateTableRain").style("display", "none");
     d3.select("#locTableWind").style("display", "none");
     d3.select("#stateTableWind").style("display", "none");
+    d3.select("#locTableHum").style("display", "none");
+    d3.select("#stateTableHum").style("display", "none");
     // Show temperature tables
     d3.select("#locTableTemp").style("display", "block");
     d3.select("#stateTableTemp").style("display", "block");
@@ -161,9 +164,48 @@ function populateData(selectedMonth, weatherType) {
     d3.select("#stateTableRain").style("display", "none");
     d3.select("#locTableTemp").style("display", "none");
     d3.select("#stateTableTemp").style("display", "none");
+    d3.select("#locTableHum").style("display", "none");
+    d3.select("#stateTableHum").style("display", "none");
     // Show Wind tables
     d3.select("#locTableWind").style("display", "block");
     d3.select("#stateTableWind").style("display", "block");
+  } else if (weatherType === "Humidity") {
+    // Show temperature tables and populate temperature data
+    // Use d3.json to fetch JSON data for temperature
+    d3.json(location_summary).then((data) => {
+      let months = data.filter(process => process.Month === selectedMonth);
+      let body = d3.select("#locTableBodyHum"); // Corrected selector here
+      body.html("");
+      months.forEach(month => {
+        let row = body.append('tr');
+        row.append('td').text(month.Location);
+        row.append('td').text(month.Avg_Humidity9am.toFixed(2)); 
+        row.append('td').text(month.Avg_Humidity3pm.toFixed(2)); 
+      });
+    });
+    d3.json(state_summary).then((data) => {
+      let months = data.filter(state => state.Month === selectedMonth);
+      let body = d3.select("#stateTableBodyHum");
+      body.html("");
+      months.forEach(month => {
+        let row = body.append('tr');
+        row.append('td').text(month.State);
+        row.append('td').text(month.Avg_Humidity9am.toFixed(2)); 
+        row.append('td').text(month.Avg_Humidity3pm.toFixed(2)); 
+        
+      });
+    });
+
+    // Hide rain tables
+    d3.select("#locTableRain").style("display", "none");
+    d3.select("#stateTableRain").style("display", "none");
+    d3.select("#locTableTemp").style("display", "none");
+    d3.select("#stateTableTemp").style("display", "none");
+    d3.select("#locTableWind").style("display", "none");
+    d3.select("#stateTableWind").style("display", "none");
+    // Show Wind tables
+    d3.select("#locTableHum").style("display", "block");
+    d3.select("#stateTableHum").style("display", "block");
   }
 }
 
