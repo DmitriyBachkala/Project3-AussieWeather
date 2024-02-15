@@ -83,6 +83,7 @@ function populateData(selectedMonth, weatherType) {
         d3.select("#stateTableWind").style("display", "none");
         d3.select("#locTableHum").style("display", "none");
         d3.select("#stateTableHum").style("display", "none");
+        
         d3.select("#windploty").style("display", "none");
         d3.select("#humidityplot").style("display", "none");
         d3.select("#tempploty").style("display", "none");
@@ -137,6 +138,7 @@ function populateData(selectedMonth, weatherType) {
         d3.select("#locTableTemp").style("display", "block");
         d3.select("#stateTableTemp").style("display", "block");
         d3.select("#tempploty").style("display", "block");
+
     } else if (weatherType === "Wind") {
         // Show temperature tables and populate temperature data
         // Use d3.json to fetch JSON data for temperature
@@ -176,8 +178,8 @@ function populateData(selectedMonth, weatherType) {
         d3.select("#stateTableTemp").style("display", "none");
         d3.select("#locTableHum").style("display", "none");
         d3.select("#stateTableHum").style("display", "none");
+        d3.select("#windploty").style("display", "none");
         d3.select("#tempploty").style("display", "none");
-  
         d3.select("#humidityplot").style("display", "none");
 
         // Show Wind tables
@@ -333,7 +335,7 @@ function addBarCharts(selectedMonth, weatherType) {
             // Plot the humidity chart
             Plotly.newPlot("windplot", chartInfo, layout);
         });
-    }   else if (weatherType === "Temp") {
+    } else if (weatherType === "Temp") {
         d3.json(location_summary).then((data) => {
             //filter by the month selected
             let barMonths = data.filter(results => results.Month === selectedMonth);
@@ -384,18 +386,13 @@ function addBarCharts(selectedMonth, weatherType) {
             // Plot the humidity chart
             Plotly.newPlot("tempplot", chartInfo, layout);
         });
-    } 
-    else {
+    } else {
         // Code for handling other weather types
     }
 }
-
-
 
 function optionChanged(id, type) {
     populateData(id, type)
     addBarCharts(id, type)
     console.log(id);
 };
-
- 
