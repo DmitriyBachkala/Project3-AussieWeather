@@ -8,6 +8,13 @@
   <title>Fun Times in Australia!</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <link rel="stylesheet" href="static/css/style.css">
+   <!-- Leaflet CSS -->
+   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+   <style>
+     #map {
+       height: 400px;
+     }
+   </style>
 </head>
 
 <body>
@@ -19,52 +26,172 @@
         <p>When is the best time of year for your adventure downunder?</p>
       </div>
     </div>
+    <!-- Rain -->
     <div class="row">
-      <div class="col-md-2">
+      <div class="col-md-4">
         <div class="well">
           <h5>Select Your Month of Travel:</h5>
-          <select id="selDataset" onchange="optionChanged(this.value)"></select>
-        </div>       
-        <table id="myTable" class="table table-borderless table-striped table-earning">
-          <caption>Average Monthly Precipitation</caption>
+          <select id="selDataset" onchange="optionChanged(this.value, document.getElementById('selWeatherType').value)"></select>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="well">
+          <h5>Select Weather Type:</h5>
+          <select id="selWeatherType" onchange="optionChanged(document.getElementById('selDataset').value, this.value)"></select>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <table id="locTableRain" class="table table-borderless table-striped table-earning">
+          <caption>Average Monthly Precipitation Location</caption>
           <thead>
-            <tr class = "table-headers">
-              <th class="col1">Days</th>
-              <th class="col2">Location</th>
-              <th class="col3">Inches</th>
-              <th class="col4">Millimeters</th>
+            <tr class="table-headers">
+              <th>Location</th>
+              <th>Days</th>
+              <th>Inches</th>
+              <th>Millimetres</th>
             </tr>
           </thead>
-          <tbody>
-          </tbody>
+          <tbody id="locTableBodyRain"></tbody>
+        </table>
+      </div>
+      <div class="col-md-6">
+        <table id="stateTableRain" class="table table-borderless table-striped table-earning">
+          <caption>Average Monthly Precipitation State</caption>
+          <thead>
+            <tr class="table-headers">
+              <th>State</th>
+              <th>Inches</th>
+              <th>Millimetres</th>
+            </tr>
+          </thead>
+          <tbody id="stateTableBodyRain"></tbody>
         </table>
       </div>
     </div>
-      </div>
-      <div class="col-md-5">
-        <div id="bar"></div>
-      </div>
-      <div class="col-md-5">
-        <div id="gauge"></div>
-      </div>
-    </div>
+      <!-- Temp -->
     <div class="row">
-      <div class="col-md-12">
-        <div id="bubble"></div>
+      <div class="col-md-6">
+        <table id="locTableTemp" class="table table-borderless table-striped table-earning">
+          <caption>Average Monthly Temperature Location</caption>
+          <thead>
+            <tr class="table-headers">
+              <th>Location</th>
+              <th>Min Temp (°C)</th>
+              <th>Max Temp (°C)</th>
+              <th>Min Temp (°F)</th>
+              <th>Max Temp (°F)</th>
+            </tr>
+          </thead>
+          <tbody id="locTableBodyTemp"></tbody>
+        </table>
+      </div>
+      <div class="col-md-6">
+        <table id="stateTableTemp" class="table table-borderless table-striped table-earning">
+          <caption>Average Monthly Temperature State</caption>
+          <thead>
+            <tr class="table-headers">
+              <th>State</th>
+              <th>Min Temp (°C)</th>
+              <th>Max Temp (°C)</th> 
+              <th>Min Temp (°F)</th>
+              <th>Max Temp (°F)</th>
+            </tr>
+          </thead>
+          <tbody id="stateTableBodyTemp"></tbody>
+        </table>
       </div>
     </div>
+
+   <!-- Wind -->
+   <div class="row">
+    <div class="col-md-6">
+      <table id="locTableWind" class="table table-borderless table-striped table-earning">
+        <caption>Average Monthly Strongest Windspeed Location</caption>
+        <thead>
+          <tr class="table-headers">
+            <th>Location</th>
+            <th>Speed (km/h)</th>
+            <th>Speed (mph)</th> 
+          </tr>
+        </thead>
+        <tbody id="locTableBodyWind"></tbody>
+      </table>
+    </div>
+    <div class="col-md-6">
+      <table id="stateTableWind" class="table table-borderless table-striped table-earning">
+        <caption>Average Monthly Strongest Windspeed State</caption>
+        <thead>
+          <tr class="table-headers">
+            <th>State</th>
+            <th>Speed (km/h)</th>
+            <th>Speed (mph)</th> 
+          </tr>
+        </thead>
+        <tbody id="stateTableBodyWind"></tbody>
+      </table>
+    </div>
+  </div>
+
+   <!-- Hum -->
+   <div class="row">
+    <div class="col-md-6">
+        <table id="locTableHum" class="table table-borderless table-striped table-earning">
+            <caption>Average Monthly Humidity Location</caption>
+            <thead>
+                <tr class="table-headers">
+                    <th>Location</th>
+                    <th>Humidity 9 am</th> 
+                    <th>Humidity 3 pm</th> 
+                </tr>
+            </thead>
+            <tbody id="locTableBodyHum"></tbody>
+        </table>
+    </div>
+    <div class="col-md-6">
+        <table id="stateTableHum" class="table table-borderless table-striped table-earning">
+            <caption>Average Monthly Humidity State</caption>
+            <thead>
+                <tr class="table-headers">
+                    <th>State</th>
+                    <th>Humidity 9 am</th> 
+                    <th>Humidity 3 pm</th> 
+                </tr>
+            </thead>
+            <tbody id="stateTableBodyHum"></tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Humidity plot -->
+<div class="row">
+    <div class="col-md-12">
+        <div id="humidityplot"></div>
+    </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+      <div id="windplot"></div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+      <div id="tempplot"></div>
+  </div>
+</div>
+
+<!-- Other HTML code -->
+</div>
+ 
   </div>
 
   <script src="https://d3js.org/d3.v7.min.js"></script>
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
   <script src="./static/js/app.js"></script>
-  <!-- <script src="./static/js/bonus.js"></script> -->
-
-</body>
-
-</html>
-
-
+ 
 </body>
 
 </html>
