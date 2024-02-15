@@ -84,9 +84,9 @@ function populateData(selectedMonth, weatherType) {
         d3.select("#locTableHum").style("display", "none");
         d3.select("#stateTableHum").style("display", "none");
         
-        d3.select("#windploty").style("display", "none");
+        d3.select("#windplot").style("display", "none");
         d3.select("#humidityplot").style("display", "none");
-        d3.select("#tempploty").style("display", "none");
+        d3.select("#tempplot").style("display", "none");
 
 
         // Show rain tables
@@ -130,14 +130,14 @@ function populateData(selectedMonth, weatherType) {
         d3.select("#stateTableWind").style("display", "none");
         d3.select("#locTableHum").style("display", "none");
         d3.select("#stateTableHum").style("display", "none");
-        d3.select("#windploty").style("display", "none");
+        d3.select("#windplot").style("display", "none");
         d3.select("#humidityplot").style("display", "none");
 
 
         // Show temperature tables
         d3.select("#locTableTemp").style("display", "block");
         d3.select("#stateTableTemp").style("display", "block");
-        d3.select("#tempploty").style("display", "block");
+        d3.select("#tempplot").style("display", "block");
 
     } else if (weatherType === "Wind") {
         // Show temperature tables and populate temperature data
@@ -178,14 +178,14 @@ function populateData(selectedMonth, weatherType) {
         d3.select("#stateTableTemp").style("display", "none");
         d3.select("#locTableHum").style("display", "none");
         d3.select("#stateTableHum").style("display", "none");
-        d3.select("#windploty").style("display", "none");
-        d3.select("#tempploty").style("display", "none");
+        
+        d3.select("#tempplot").style("display", "none");
         d3.select("#humidityplot").style("display", "none");
 
         // Show Wind tables
         d3.select("#locTableWind").style("display", "block");
         d3.select("#stateTableWind").style("display", "block");
-        d3.select("#windploty").style("display", "block");
+        d3.select("#windplot").style("display", "block");
 
     } else if (weatherType === "Humidity") {
         // Show temperature tables and populate temperature data
@@ -221,13 +221,14 @@ function populateData(selectedMonth, weatherType) {
         d3.select("#stateTableTemp").style("display", "none");
         d3.select("#locTableWind").style("display", "none");
         d3.select("#stateTableWind").style("display", "none");
-        d3.select("#windploty").style("display", "none");
-        d3.select("#tempploty").style("display", "none");
+        d3.select("#windplot").style("display", "none");
+        d3.select("#tempplot").style("display", "none");
         // Show Wind tables
         d3.select("#locTableHum").style("display", "block");
         d3.select("#stateTableHum").style("display", "block");
 
         d3.select("#humidityplot").style("display", "block");
+       
 
     }
 }
@@ -343,26 +344,26 @@ function addBarCharts(selectedMonth, weatherType) {
 
             //select all of the cities
             let cityLocation = [];
-            let mornW = [];
-            let aftW = [];
+            let mornT = [];
+            let aftT = [];
 
             for (let i = 0; i < barMonths.length; i++) {
                 cityLocation.push(barMonths[i].Location);
-                mornW.push(barMonths[i].Avg_Temp9am);
-                aftW.push(barMonths[i].Avg_Temp3pm);
+                mornT.push(barMonths[i].Avg_Temp9am);
+                aftT.push(barMonths[i].Avg_Temp3pm);
             }
 
             // Create traces for humidity data
-            let morningW = {
+            let morningT = {
                 x: cityLocation,
-                y: mornW,
+                y: mornT,
                 type: "bar",
                 name: "Morning Temp"
             };
 
-            let afternoonW = {
+            let afternoonT = {
                 x: cityLocation,
-                y: aftW,
+                y: aftT,
                 type: "bar",
                 name: "Afternoon Temp"
             };
@@ -382,7 +383,7 @@ function addBarCharts(selectedMonth, weatherType) {
             };
 
             // The data array consists of both humidity traces
-            let chartInfo = [morningW, afternoonW];
+            let chartInfo = [morningT, afternoonT];
             // Plot the humidity chart
             Plotly.newPlot("tempplot", chartInfo, layout);
         });
