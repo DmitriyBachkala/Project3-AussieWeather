@@ -95,6 +95,8 @@
               <th>State</th>
               <th>Min Temp (°C)</th>
               <th>Max Temp (°C)</th> 
+              <th>Min Temp (°F)</th>
+              <th>Max Temp (°F)</th>
             </tr>
           </thead>
           <tbody id="stateTableBodyTemp"></tbody>
@@ -135,34 +137,54 @@
    <!-- Hum -->
    <div class="row">
     <div class="col-md-6">
-      <table id="locTableHum" class="table table-borderless table-striped table-earning">
-        <caption>Average Monthly Humidity Location</caption>
-        <thead>
-          <tr class="table-headers">
-            <th>Location</th>
-            <th>Humidity 9 am</th> 
-            <th>Humidity 3 pm</th> 
-          </tr>
-        </thead>
-        <tbody id="locTableBodyHum"></tbody>
-      </table>
+        <table id="locTableHum" class="table table-borderless table-striped table-earning">
+            <caption>Average Monthly Humidity Location</caption>
+            <thead>
+                <tr class="table-headers">
+                    <th>Location</th>
+                    <th>Humidity 9 am</th> 
+                    <th>Humidity 3 pm</th> 
+                </tr>
+            </thead>
+            <tbody id="locTableBodyHum"></tbody>
+        </table>
     </div>
     <div class="col-md-6">
-      <table id="stateTableHum" class="table table-borderless table-striped table-earning">
-        <caption>Average Monthly Humidity State</caption>
-        <thead>
-          <tr class="table-headers">
-            <th>State</th>
-            <th>Humidity 9 am</th> 
-            <th>Humidity 3 pm</th> 
-          </tr>
-        </thead>
-        <tbody id="stateTableBodyHum"></tbody>
-      </table>
+        <table id="stateTableHum" class="table table-borderless table-striped table-earning">
+            <caption>Average Monthly Humidity State</caption>
+            <thead>
+                <tr class="table-headers">
+                    <th>State</th>
+                    <th>Humidity 9 am</th> 
+                    <th>Humidity 3 pm</th> 
+                </tr>
+            </thead>
+            <tbody id="stateTableBodyHum"></tbody>
+        </table>
     </div>
+</div>
+
+<!-- Humidity plot -->
+<div class="row">
+    <div class="col-md-12">
+        <div id="humidityplot"></div>
+    </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+      <div id="windplot"></div>
   </div>
-  <!-- Leaflet Map Container -->
-  
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+      <div id="tempplot"></div>
+  </div>
+</div>
+
+<!-- Other HTML code -->
+</div>
  
   </div>
 
