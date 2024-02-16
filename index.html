@@ -102,6 +102,11 @@
           <tbody id="stateTableBodyTemp"></tbody>
         </table>
       </div>
+      <div class="col-md-6">
+        <div class="col-md-12">
+            <div id="tempplot"></div>
+        </div>
+      </div>
     </div>
 
    <!-- Wind -->
@@ -132,6 +137,13 @@
         <tbody id="stateTableBodyWind"></tbody>
       </table>
     </div>
+
+    <div class="col-md-6">
+      <div class="col-md-12">
+          <div id="windplot"></div>
+      </div>
+    </div>
+
   </div>
 
    <!-- Hum -->
@@ -149,41 +161,28 @@
             <tbody id="locTableBodyHum"></tbody>
         </table>
     </div>
+    <!-- Humidity plot -->
     <div class="col-md-6">
-        <table id="stateTableHum" class="table table-borderless table-striped table-earning">
-            <caption>Average Monthly Humidity State</caption>
-            <thead>
-                <tr class="table-headers">
-                    <th>State</th>
-                    <th>Humidity 9 am</th> 
-                    <th>Humidity 3 pm</th> 
-                </tr>
-            </thead>
-            <tbody id="stateTableBodyHum"></tbody>
-        </table>
+      <table id="stateTableHum" class="table table-borderless table-striped table-earning">
+          <caption>Average Monthly Humidity State</caption>
+          <thead>
+              <tr class="table-headers">
+                  <th>State</th>
+                  <th>Humidity 9 am</th> 
+                  <th>Humidity 3 pm</th> 
+              </tr>
+          </thead>
+          <tbody id="stateTableBodyHum"></tbody>
+      </table>
     </div>
-</div>
-
-<!-- Humidity plot -->
-<div class="row">
-    <div class="col-md-12">
-        <div id="humidityplot"></div>
-    </div>
-</div>
-
-<div class="row">
+    
+<div class="col-md-6">
   <div class="col-md-12">
-      <div id="windplot"></div>
+      <div id="humidityplot"></div>
   </div>
 </div>
-
-<div class="row">
-  <div class="col-md-12">
-      <div id="tempplot"></div>
-  </div>
+  
 </div>
-
-<div id="map"></div>
 
 
 <!-- Other HTML code -->
@@ -191,21 +190,10 @@
  
   </div>
 
-    <!-- Include JavaScript libraries -->
-    <script src="https://d3js.org/d3.v7.min.js"></script>
-    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-    <script src="./static/js/app.js"></script>
-    <!-- Leaflet JavaScript -->
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-    <script>
-      // Initialize the Leaflet map
-      var map = L.map('map').setView([-27, 133], 4);
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-      }).addTo(map);
-    </script>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <script src="./static/js/app.js"></script>
  
-
 </body>
 
 </html>

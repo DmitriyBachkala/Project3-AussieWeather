@@ -1,5 +1,6 @@
 // Get data paths
 const location_summary = "/Data/location_summary.json";
+const locationData = "../Data/location.json";
 const RainyDays = "/Data/rainydays.json";
 const state_summary = "/Data/state_summary.json";
 
@@ -82,9 +83,10 @@ function populateData(selectedMonth, weatherType) {
         d3.select("#stateTableWind").style("display", "none");
         d3.select("#locTableHum").style("display", "none");
         d3.select("#stateTableHum").style("display", "none");
-        d3.select("#windploty").style("display", "none");
+        
+        d3.select("#windplot").style("display", "none");
         d3.select("#humidityplot").style("display", "none");
-        d3.select("#tempploty").style("display", "none");
+        d3.select("#tempplot").style("display", "none");
 
 
         // Show rain tables
@@ -128,14 +130,15 @@ function populateData(selectedMonth, weatherType) {
         d3.select("#stateTableWind").style("display", "none");
         d3.select("#locTableHum").style("display", "none");
         d3.select("#stateTableHum").style("display", "none");
-        d3.select("#windploty").style("display", "none");
+        d3.select("#windplot").style("display", "none");
         d3.select("#humidityplot").style("display", "none");
 
 
         // Show temperature tables
         d3.select("#locTableTemp").style("display", "block");
         d3.select("#stateTableTemp").style("display", "block");
-        d3.select("#tempploty").style("display", "block");
+        d3.select("#tempplot").style("display", "block");
+
     } else if (weatherType === "Wind") {
         // Show temperature tables and populate temperature data
         // Use d3.json to fetch JSON data for temperature
@@ -175,14 +178,14 @@ function populateData(selectedMonth, weatherType) {
         d3.select("#stateTableTemp").style("display", "none");
         d3.select("#locTableHum").style("display", "none");
         d3.select("#stateTableHum").style("display", "none");
-        d3.select("#tempploty").style("display", "none");
-  
+        
+        d3.select("#tempplot").style("display", "none");
         d3.select("#humidityplot").style("display", "none");
 
         // Show Wind tables
         d3.select("#locTableWind").style("display", "block");
         d3.select("#stateTableWind").style("display", "block");
-        d3.select("#windploty").style("display", "block");
+        d3.select("#windplot").style("display", "block");
 
     } else if (weatherType === "Humidity") {
         // Show temperature tables and populate temperature data
@@ -218,13 +221,14 @@ function populateData(selectedMonth, weatherType) {
         d3.select("#stateTableTemp").style("display", "none");
         d3.select("#locTableWind").style("display", "none");
         d3.select("#stateTableWind").style("display", "none");
-        d3.select("#windploty").style("display", "none");
-        d3.select("#tempploty").style("display", "none");
+        d3.select("#windplot").style("display", "none");
+        d3.select("#tempplot").style("display", "none");
         // Show Wind tables
         d3.select("#locTableHum").style("display", "block");
         d3.select("#stateTableHum").style("display", "block");
 
         d3.select("#humidityplot").style("display", "block");
+       
 
     }
 }
@@ -243,37 +247,72 @@ function addBarCharts(selectedMonth, weatherType) {
 
             for (let i = 0; i < barMonths.length; i++) {
                 cityLocation.push(barMonths[i].Location);
-                mornHumidity.push(barMonths[i].Avg_Humidity9am);
-                aftHumidity.push(barMonths[i].Avg_Humidity3pm);
+                mornHumidity.push(barMonths[i].Avg_Humidity9am.toFixed(1));
+                aftHumidity.push(barMonths[i].Avg_Humidity3pm.toFixed(1));
             }
 
             // Create traces for humidity data
             let morningHumidity = {
-                x: cityLocation,
-                y: mornHumidity,
+                y: cityLocation,
+                x: mornHumidity,
                 type: "bar",
-                name: "Morning Humidity"
+                name: "Morning Humidity",
+                orientation: 'h',
+                marker: {
+                    // color: '#a8bffb'
+                    color: '#91e3ff',
+                    opacity: .7,
+                    line: {
+                        color: '#00040a',
+                        width: 1
+                    }
+                }
             };
 
             let afternoonHumidity = {
-                x: cityLocation,
-                y: aftHumidity,
+                y: cityLocation,
+                x: aftHumidity,
                 type: "bar",
-                name: "Afternoon Humidity"
+                name: "Afternoon Humidity",
+                orientation: 'h',
+                marker: {
+                    color: '#3964b3',
+                    opacity: .7,
+                    line: {
+                        color: '#00040a',
+                        width: 1
+                    }
+                }    
             };
 
             // Apply a title to the layout
             let layout = {
-                title: `Humidity by City in ${selectedMonth}`,
-                barmode: "group",
+                title: `<b>Morning vs Afternoon % Humidity<br> by City in ${selectedMonth}</b>`,
+                // barmode: "group",
                 // Include margins in the layout so the x-tick labels display correctly
+                autosize: false,
+                width: 500,
+                height: 1500,
+                yaxis: {
+                    // ticktext: cityLocation.sort().reverse(),
+                    automargin: true,
+                    autorange: 'reversed'
+
+                },
+                xaxis: {
+                    side: 'top',
+                    autorange: 'reversed'
+                },
                 margin: {
-                    l: 50,
-                    r: 50,
-                    b: 200,
-                    t: 50,
-                    pad: 4
-                }
+                    width: 200,
+                    height: 20,
+                    l: 120,
+                    r: 20,
+                    b: 50,
+                    t: 100,
+                    pad: 1
+                },
+                // legend:{'traceorder':'reversed'}
             };
 
             // The data array consists of both humidity traces
@@ -294,45 +333,62 @@ function addBarCharts(selectedMonth, weatherType) {
 
             for (let i = 0; i < barMonths.length; i++) {
                 cityLocation.push(barMonths[i].Location);
-                mornW.push(barMonths[i].Avg_WindSpeed9am);
-                aftW.push(barMonths[i].Avg_WindSpeed3pm);
+                mornW.push(barMonths[i].Avg_WindSpeed9am.toFixed(2));
+                aftW.push(barMonths[i].Avg_WindSpeed3pm.toFixed(2));
             }
 
-            // Create traces for humidity data
+            // Create traces for Wind data
             let morningW = {
-                x: cityLocation,
-                y: mornW,
+                y: cityLocation,
+                x: mornW,
                 type: "bar",
-                name: "Morning Wind Speed"
+                name: "Morning Wind Speed",
+                orientation: 'h'
             };
 
             let afternoonW = {
-                x: cityLocation,
-                y: aftW,
+                y: cityLocation,
+                x: aftW,
                 type: "bar",
-                name: "Afternoon Wind Speed"
+                name: "Afternoon Wind Speed",
+                orientation: 'h'
             };
 
             // Apply a title to the layout
             let layout = {
-                title: `Wind by City in ${selectedMonth}`,
+                title: `<b>Morning vs Afternoon Wind Speed (km/hr)<br> by City in ${selectedMonth}</b>`,
                 barmode: "group",
                 // Include margins in the layout so the x-tick labels display correctly
+                autosize: false,
+                width: 500,
+                height: 1500,
+                yaxis: {
+                    // title: "Location",
+                    ticktext: cityLocation.sort().reverse(),
+                    automargin: true
+
+                },
+                xaxis: {
+                    side: 'top'
+                },
                 margin: {
-                    l: 50,
-                    r: 50,
-                    b: 200,
-                    t: 50,
-                    pad: 4
-                }
+                    width: 200,
+                    height: 20,
+                    l: 120,
+                    r: 20,
+                    b: 50,
+                    t: 100,
+                    pad: 1
+                },
+                legend:{'traceorder':'reversed'}
             };
 
-            // The data array consists of both humidity traces
-            let chartInfo = [morningW, afternoonW];
-            // Plot the humidity chart
+            // The data array consists of both Wind traces
+            let chartInfo = [afternoonW, morningW];
+            // Plot the wind chart
             Plotly.newPlot("windplot", chartInfo, layout);
         });
-    }   else if (weatherType === "Temp") {
+    } else if (weatherType === "Temp") {
         d3.json(location_summary).then((data) => {
             //filter by the month selected
             let barMonths = data.filter(results => results.Month === selectedMonth);
@@ -340,82 +396,73 @@ function addBarCharts(selectedMonth, weatherType) {
 
             //select all of the cities
             let cityLocation = [];
-            let mornW = [];
-            let aftW = [];
+            let mornT = [];
+            let aftT = [];
 
             for (let i = 0; i < barMonths.length; i++) {
                 cityLocation.push(barMonths[i].Location);
-                mornW.push(barMonths[i].Avg_Temp9am);
-                aftW.push(barMonths[i].Avg_Temp3pm);
+                mornT.push(barMonths[i].Avg_Temp9am.toFixed(2));
+                aftT.push(barMonths[i].Avg_Temp3pm.toFixed(2));
             }
 
-            // Create traces for humidity data
-            let morningW = {
-                x: cityLocation,
-                y: mornW,
-                type: "bar",
-                name: "Morning Temp"
-            };
+            // Create traces for Temperature data
 
-            let afternoonW = {
-                x: cityLocation,
-                y: aftW,
+            let afternoonT = {
+                y: cityLocation,
+                x: aftT,
                 type: "bar",
-                name: "Afternoon Temp"
+                name: "Afternoon Temp",
+                orientation: 'h'
+            };
+            let morningT = {
+                y: cityLocation,
+                x: mornT,
+                type: "bar",
+                name: "Morning Temp ",
+                orientation: 'h',
+                color: 'red'
             };
 
             // Apply a title to the layout
             let layout = {
-                title: `Temp by City in ${selectedMonth}`,
+                title: `<b>Morning vs Afternoon Temp (\u00B0C)<br> by City in ${selectedMonth}</b>`,
                 barmode: "group",
                 // Include margins in the layout so the x-tick labels display correctly
+                autosize: false,
+                width: 500,
+                height: 1500,
+                yaxis: {
+                    title: "Location",
+                    ticktext: cityLocation.sort().reverse(),
+                    automargin: true
+                },
+                xaxis: {
+                    side: 'top'
+                },
                 margin: {
-                    l: 50,
-                    r: 50,
-                    b: 200,
-                    t: 50,
-                    pad: 4
-                }
+                    width: 200,
+                    height: 20,
+                    l: 120,
+                    r: 20,
+                    b: 50,
+                    t: 100,
+                    pad: 1
+                },
+                legend:{'traceorder':'reversed'}
             };
 
-            // The data array consists of both humidity traces
-            let chartInfo = [morningW, afternoonW];
-            // Plot the humidity chart
+            // The data array consists of both temperature traces
+            let chartInfo = [afternoonT, morningT];
+            // Plot the temperature chart
             Plotly.newPlot("tempplot", chartInfo, layout);
         });
-    } 
-    else {
+    } else {
         // Code for handling other weather types
     }
 }
-
-
-// Fetch the location summary data for markers
-d3.json("../Data/location_summary.json").then(function(locations) {
-    // Iterate over the locations
-    locations.forEach(function(location) {
-        // Extract relevant information
-        var name = location.Location;
-        var latitude = parseFloat(location.Latitude);
-        var longitude = parseFloat(location.Longitude);
-        var month = location.Month;
-        var minTemp = location.Avg_MinTemp.toFixed(2);
-        var maxTemp = location.Avg_MaxTemp.toFixed(2);
-  
-        // Create a marker with a popup containing temperature information
-        var marker = L.marker([latitude, longitude])
-            .bindPopup("Location: " + name + "<br> Month: " + month + "<br> Avg Min Temp: " + minTemp + "°C<br> Avg Max Temp: " + maxTemp + "°C")
-            .addTo(map);
-    });
-  });
-
-
-
 
 function optionChanged(id, type) {
     populateData(id, type)
     addBarCharts(id, type)
     console.log(id);
 };
-
- 
