@@ -247,41 +247,55 @@ function addBarCharts(selectedMonth, weatherType) {
 
             for (let i = 0; i < barMonths.length; i++) {
                 cityLocation.push(barMonths[i].Location);
-                mornHumidity.push(barMonths[i].Avg_Humidity9am);
-                aftHumidity.push(barMonths[i].Avg_Humidity3pm);
+                mornHumidity.push(barMonths[i].Avg_Humidity9am.toFixed(1));
+                aftHumidity.push(barMonths[i].Avg_Humidity3pm.toFixed(1));
             }
 
             // Create traces for humidity data
             let morningHumidity = {
-                x: cityLocation,
-                y: mornHumidity,
+                y: cityLocation,
+                x: mornHumidity,
                 type: "bar",
-                name: "Morning Humidity"
+                name: "Morning Humidity",
+                orientation: 'h'
             };
 
             let afternoonHumidity = {
-                x: cityLocation,
-                y: aftHumidity,
+                y: cityLocation,
+                x: aftHumidity,
                 type: "bar",
-                name: "Afternoon Humidity"
+                name: "Afternoon Humidity",
+                orientation: 'h'
             };
 
             // Apply a title to the layout
             let layout = {
                 title: `Humidity by City in ${selectedMonth}`,
-                barmode: "group",
+                // barmode: "group",
                 // Include margins in the layout so the x-tick labels display correctly
+                autosize: false,
+                width: 500,
+                height: 1500,
+                yaxis: {
+                    title: "Location",
+                    ticktext: cityLocation.sort().reverse(),
+                    automargin: true
+
+
+                },
                 margin: {
-                    l: 50,
-                    r: 50,
-                    b: 200,
+                    width: 200,
+                    height: 20,
+                    l: 120,
+                    r: 20,
+                    b: 50,
                     t: 50,
-                    pad: 4
+                    pad: 1
                 }
             };
 
             // The data array consists of both humidity traces
-            let chartInfo = [morningHumidity, afternoonHumidity];
+            let chartInfo = [afternoonHumidity, morningHumidity];
             // Plot the humidity chart
             Plotly.newPlot("humidityplot", chartInfo, layout);
         });
