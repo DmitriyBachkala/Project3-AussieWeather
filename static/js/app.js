@@ -1,6 +1,5 @@
 // Get data paths
 const location_summary = "/Data/location_summary.json";
-const locationData = "../Data/location.csv";
 const RainyDays = "/Data/rainydays.json";
 const state_summary = "/Data/state_summary.json";
 
@@ -389,6 +388,27 @@ function addBarCharts(selectedMonth, weatherType) {
         // Code for handling other weather types
     }
 }
+
+
+// Fetch the location summary data for markers
+d3.json("../Data/location_summary.json").then(function(locations) {
+    // Iterate over the locations
+    locations.forEach(function(location) {
+        // Extract relevant information
+        var name = location.Location;
+        var latitude = parseFloat(location.Latitude);
+        var longitude = parseFloat(location.Longitude);
+        var month = location.Month;
+        var minTemp = location.Avg_MinTemp.toFixed(2);
+        var maxTemp = location.Avg_MaxTemp.toFixed(2);
+  
+        // Create a marker with a popup containing temperature information
+        var marker = L.marker([latitude, longitude])
+            .bindPopup("Location: " + name + "<br> Month: " + month + "<br> Avg Min Temp: " + minTemp + "°C<br> Avg Max Temp: " + maxTemp + "°C")
+            .addTo(map);
+    });
+  });
+
 
 
 
