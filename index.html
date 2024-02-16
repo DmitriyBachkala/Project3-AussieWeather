@@ -8,17 +8,37 @@
   <title>Fun Times in Australia!</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <link rel="stylesheet" href="static/css/style.css">
-   <!-- Leaflet CSS -->
-   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
-   <style>
-     #map {
-       height: 400px;
-     }
-   </style>
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+  <style>
+    #map {
+      height: 400px;
+    }
+
+    /* Style for video background */
+    #bg-video {
+      position: fixed;
+      top: 0;
+      left: 0;
+      min-width: 100%;
+      min-height: 100%;
+      z-index: -1;
+    }
+
+    .container {
+      position: relative;
+      z-index: 1; /* Ensure other content appears above the video */
+    }
+  </style>
 </head>
 
 <body>
 
+    <!-- Video Background -->
+    <video id="bg-video" autoplay muted loop>
+      <source src="aussie.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
   <div class="container">
     <div class="row">
       <div class="col-md-12 jumbotron text-center">
