@@ -27,6 +27,7 @@ This chart lists four columns of data:
 - Millimeters: Average precipitation in millimeters for the selected month
 
 Humidity (Bar chart) 
+This graph shows morning and afternoon humidity in the various locations of Australia. 
 
 Wind speed (Bar chart) 
 
