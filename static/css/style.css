@@ -10,3 +10,17 @@
     background-color: royalblue;
     color: white;
 }
+.table {
+    background-color: rgba(255, 255, 255, 0.7); /* Semi-transparent white background */
+    border-radius: 10px; /* Rounded corners */
+    padding: 20px; /* Add padding for spacing */
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+  }
+  
+  .table th {
+    font-weight: bold; /* Make table headers bold */
+  }
+  
+  .table td, .table th {
+    padding: 10px; /* Add padding to table cells */
+  }
