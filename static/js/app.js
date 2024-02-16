@@ -461,8 +461,46 @@ function addBarCharts(selectedMonth, weatherType) {
     }
 }
 
+function updateMarkers(selectedMonth) {
+    // Fetch the location summary data for markers
+    d3.json("/Data/location_summary.json").then(function(locations) {
+        // Clear existing markers
+        map.eachLayer(function(layer) {
+            if (layer instanceof L.Marker) {
+                map.removeLayer(layer);
+            }
+        });
+
+        // Filter locations based on the selected month
+        let filteredLocations = locations.filter(location => location.Month === selectedMonth);
+
+        // Iterate over the filtered locations
+        filteredLocations.forEach(function(location) {
+            // Extract relevant information
+            var name = location.Location;
+            var latitude = parseFloat(location.Latitude);
+            var longitude = parseFloat(location.Longitude);
+            var month = location.Month;
+            var minTemp = location.Avg_MinTemp.toFixed(2) + "°C / " + (((location.Avg_MinTemp * 9 / 5) + 32).toFixed(2)) + "°F";
+            var maxTemp = location.Avg_MaxTemp.toFixed(2) + "°C / " + (((location.Avg_MaxTemp * 9 / 5) + 32).toFixed(2)) + "°F";
+            var rainfall = location.Avg_Rainfall.toFixed(2);
+            var windSpeed9am = location.Avg_WindSpeed9am.toFixed(2) + " km/h / " + (location.Avg_WindSpeed9am * 0.621371).toFixed(2) + " mph";
+            var windSpeed3pm = location.Avg_WindSpeed3pm.toFixed(2) + " km/h / " + (location.Avg_WindSpeed3pm * 0.621371).toFixed(2) + " mph";
+            var humidity9am = location.Avg_Humidity9am.toFixed(2);
+            var humidity3pm = location.Avg_Humidity3pm.toFixed(2);
+
+            // Create a marker with a popup information
+            var marker = L.marker([latitude, longitude])
+            // make location name blue
+            .bindPopup("<span style='color: blue; font-size: 16px;'>Location: " + name + "</span><br> Month: " + month + "<br> Avg Min Temp: <span style='color: red;'>" + minTemp + "</span><br> Avg Max Temp: <span style='color: red;'>" + maxTemp + "</span><br> Avg Rainfall: <span style='color: cyan;'>" + rainfall + "mm</span><br> Avg Wind Speed (9am): <span style='color: darkgrey;'>" + windSpeed9am + "</span><br> Avg Wind Speed (3pm): <span style='color: darkgrey;'>" + windSpeed3pm + "</span><br> Avg Humidity (9am): <span style='color: grey;'>" + humidity9am + "%</span><br> Avg Humidity (3pm): <span style='color: grey;'>" + humidity3pm + "%</span>")
+                .addTo(map);
+        });
+    });
+}
+
 function optionChanged(id, type) {
-    populateData(id, type)
-    addBarCharts(id, type)
+    populateData(id, type);
+    addBarCharts(id, type);
+    updateMarkers(id);
     console.log(id);
 };
