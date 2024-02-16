@@ -44,8 +44,7 @@ function updateDropdown() {
     });
 }
 
-// Call updateDropdown() initially 
-updateDropdown();
+ 
 
 function populateData(selectedMonth, weatherType) {
     if (weatherType === "Rain") {
