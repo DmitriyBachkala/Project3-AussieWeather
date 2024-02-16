@@ -2,12 +2,12 @@
 const location_summary = "../Data/location_summary.csv";
 const locationData = "../Data/location.csv";
 const RainyDays = "/Data/rainydays.json";
-const state_summary = "../Data/state_summary.csv";
+const state_summary = "../Data/state_summary.json";
 
 let data = {};
 
 // Fetch the JSON data (with d3.csv) and console log it
-d3.csv(state_summary).then(function(result) {
+d3.json(state_summary).then(function(result) {
     data = result;
     console.log(data);
     updateDropdown(); // Call the function after data is fetched
@@ -32,8 +32,7 @@ function updateDropdown() {
     optionChanged(months[0]);
 }
 
-// Call updateDropdown() initially 
-updateDropdown();
+
 
 function populateData(selectedMonth) {
     // Add data to panel
@@ -54,26 +53,7 @@ function populateData(selectedMonth) {
     });
 }
 
-function optionChanged(id) {
-    populateData(id);
-    console.log(id);
-}
 
-// Leaflet Map Initialization
-function initMap() {
-    // Initialize map
-    const map = L.map('map').setView([-25.2744, 133.7751], 4);
-
-    // Add a tile layer
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    }).addTo(map);
-}
-
-// Call initMap() after the DOM has loaded
-document.addEventListener('DOMContentLoaded', function() {
-    initMap();
-});
 
 // Fetch the location summary data for markers
 d3.json("../Data/location_summary.json").then(function(locations) {
@@ -83,13 +63,21 @@ d3.json("../Data/location_summary.json").then(function(locations) {
       var name = location.Location;
       var latitude = parseFloat(location.Latitude);
       var longitude = parseFloat(location.Longitude);
+      var month = location.Month;
       var minTemp = location.Avg_MinTemp.toFixed(2);
       var maxTemp = location.Avg_MaxTemp.toFixed(2);
 
       // Create a marker with a popup containing temperature information
       var marker = L.marker([latitude, longitude])
-          .bindPopup("Location: " + name + "<br> Avg Min Temp: " + minTemp + "°C<br> Avg Max Temp: " + maxTemp + "°C")
+          .bindPopup("Location: " + name + "<br> Month: " + month + "<br> Avg Min Temp: " + minTemp + "°C<br> Avg Max Temp: " + maxTemp + "°C")
           .addTo(map);
   });
 });
 
+// Call updateDropdown() initially 
+updateDropdown();
+
+function optionChanged(id) {
+    populateData(id);
+    console.log(id);
+}
