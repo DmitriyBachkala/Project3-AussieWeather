@@ -321,14 +321,16 @@ function addBarCharts(selectedMonth, weatherType) {
                 y: cityLocation,
                 x: mornW,
                 type: "bar",
-                name: "Morning Wind Speed"
+                name: "Morning Wind Speed",
+                orientation: 'h'
             };
 
             let afternoonW = {
                 y: cityLocation,
                 x: aftW,
                 type: "bar",
-                name: "Afternoon Wind Speed"
+                name: "Afternoon Wind Speed",
+                orientation: 'h'
             };
 
             // Apply a title to the layout
