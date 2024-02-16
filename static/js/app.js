@@ -1,8 +1,8 @@
 // Get data paths
-const location_summary = "/Data/location_summary.json";
-const locationData = "../Data/location.json";
-const RainyDays = "/Data/rainydays.json";
-const state_summary = "/Data/state_summary.json";
+let location_summary = "/Data/location_summary.json";
+let locationData = "../Data/location.json";
+let RainyDays = "/Data/rainydays.json";
+let state_summary = "/Data/state_summary.json";
 
 let weatherType = "Rain"; // Initialize weatherType with "Rain"
 
@@ -12,14 +12,14 @@ d3.csv(state_summary).then(function(result) {
     console.log(data);
     updateDropdown(); // Call the function after data is fetched
 });
-
+ 
 // Create functions
 function updateDropdown() {
-    const dropdownMenu = d3.select("#selDataset");
-    const dropdownWeatherType = d3.select("#selWeatherType");
+    let dropdownMenu = d3.select("#selDataset");
+    let dropdownWeatherType = d3.select("#selWeatherType");
     // Array of month names
-    const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-    const weatherTypes = ["Rain", "Temp", "Wind", "Humidity"]
+    let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    let weatherTypes = ["Temp", "Rain", "Wind", "Humidity"]
     // Clear existing options
     dropdownMenu.html("");
     dropdownWeatherType.html("");
@@ -33,9 +33,9 @@ function updateDropdown() {
     });
 
     // Automatically populate with the first month
-    optionChanged(months[0]);
+    optionChanged(months[0],weatherTypes[0]);
     // Set the default weather type to "Rain" when the page loads
-    dropdownWeatherType.node().value = "Rain";
+    dropdownWeatherType.node().value = "Temp";
 
     // Event listener for weather type dropdown
     dropdownWeatherType.on("change", function() {
