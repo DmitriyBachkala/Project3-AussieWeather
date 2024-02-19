@@ -29,21 +29,58 @@
       position: relative;
       z-index: 1; /* Ensure other content appears above the video */
     }
+
+    /* Style the quiz popup */
+    .modal {
+      display: none; /* Hidden by default */
+      position: fixed; /* Stay in place */
+      z-index: 1; /* Sit on top */
+      left: 0;
+      top: 0;
+      width: 100%; /* Full width */
+      height: 100%; /* Full height */
+      overflow: auto; /* Enable scroll if needed */
+      background-color: rgba(0, 0, 0, 0.4); /* Black with opacity */
+    }
+
+    /* Style the quiz popup content */
+    .modal-content {
+      background-color: #fefefe;
+      margin: 15% auto; /* 15% from the top and centered */
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%; /* Could be more or less, depending on screen size */
+    }
+
+    /* Style the close button */
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+      color: black;
+      text-decoration: none;
+      cursor: pointer;
+    }
   </style>
 </head>
 
 <body>
 
-    <!-- Video Background -->
-    <video id="bg-video" autoplay muted loop>
-      <source src="aussie.mp4" type="video/mp4">
-      Your browser does not support the video tag.
-    </video>
+  <!-- Video Background -->
+  <video id="bg-video" autoplay muted loop>
+    <source src="aussie.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
   <div class="container">
     <div class="row">
       <div class="col-md-12 jumbotron text-center">
         <h1>Aussie Weather</h1>
-        <p>When is the best time of year for your adventure downunder?</p>
+        <p>When is the best time of year for your adventure down under?</p>
       </div>
     </div>
     <!-- Rain -->
@@ -60,7 +97,15 @@
           <select id="selWeatherType" onchange="optionChanged(document.getElementById('selDataset').value, this.value)"></select>
         </div>
       </div>
+      <div class="col-md-4">
+        <div class="well">
+          <button onclick="openQuizPopup()">Take Quiz</button>
+        </div>
+      </div>
     </div>
+
+   
+
     <div class="row">
       <div class="col-md-6">
         <table id="locTableRain" class="table table-borderless table-striped table-earning">
@@ -90,7 +135,7 @@
         </table>
       </div>
     </div>
-      <!-- Temp -->
+    <!-- Temp -->
     <div class="row">
       <div class="col-md-6">
         <table id="locTableTemp" class="table table-borderless table-striped table-earning">
@@ -114,7 +159,7 @@
             <tr class="table-headers">
               <th>State</th>
               <th>Min Temp (°C)</th>
-              <th>Max Temp (°C)</th> 
+              <th>Max Temp (°C)</th>
               <th>Min Temp (°F)</th>
               <th>Max Temp (°F)</th>
             </tr>
@@ -124,93 +169,130 @@
       </div>
       <div class="col-md-6">
         <div class="col-md-12">
-            <div id="tempplot"></div>
+          <div id="tempplot"></div>
         </div>
       </div>
     </div>
 
-   <!-- Wind -->
-   <div class="row">
-    <div class="col-md-6">
-      <table id="locTableWind" class="table table-borderless table-striped table-earning">
-        <caption>Average Monthly Strongest Windspeed Location</caption>
-        <thead>
-          <tr class="table-headers">
-            <th>Location</th>
-            <th>Speed (km/h)</th>
-            <th>Speed (mph)</th> 
-          </tr>
-        </thead>
-        <tbody id="locTableBodyWind"></tbody>
-      </table>
-    </div>
-    <div class="col-md-6">
-      <table id="stateTableWind" class="table table-borderless table-striped table-earning">
-        <caption>Average Monthly Strongest Windspeed State</caption>
-        <thead>
-          <tr class="table-headers">
-            <th>State</th>
-            <th>Speed (km/h)</th>
-            <th>Speed (mph)</th> 
-          </tr>
-        </thead>
-        <tbody id="stateTableBodyWind"></tbody>
-      </table>
-    </div>
+    <!-- Wind -->
+    <div class="row">
+      <div class="col-md-6">
+        <table id="locTableWind" class="table table-borderless table-striped table-earning">
+          <caption>Average Monthly Strongest Windspeed Location</caption>
+          <thead>
+            <tr class="table-headers">
+              <th>Location</th>
+              <th>Speed (km/h)</th>
+              <th>Speed (mph)</th>
+            </tr>
+          </thead>
+          <tbody id="locTableBodyWind"></tbody>
+        </table>
+      </div>
+      <div class="col-md-6">
+        <table id="stateTableWind" class="table table-borderless table-striped table-earning">
+          <caption>Average Monthly Strongest Windspeed State</caption>
+          <thead>
+            <tr class="table-headers">
+              <th>State</th>
+              <th>Speed (km/h)</th>
+              <th>Speed (mph)</th>
+            </tr>
+          </thead>
+          <tbody id="stateTableBodyWind"></tbody>
+        </table>
+      </div>
 
-    <div class="col-md-6">
-      <div class="col-md-12">
+      <div class="col-md-6">
+        <div class="col-md-12">
           <div id="windplot"></div>
+        </div>
       </div>
     </div>
 
-  </div>
-
-   <!-- Hum -->
-   <div class="row">
-    <div class="col-md-6">
+    <!-- Hum -->
+    <div class="row">
+      <div class="col-md-6">
         <table id="locTableHum" class="table table-borderless table-striped table-earning">
-            <caption>Average Monthly Humidity Location</caption>
-            <thead>
-                <tr class="table-headers">
-                    <th>Location</th>
-                    <th>Humidity 9 am</th> 
-                    <th>Humidity 3 pm</th> 
-                </tr>
-            </thead>
-            <tbody id="locTableBodyHum"></tbody>
+          <caption>Average Monthly Humidity Location</caption>
+          <thead>
+            <tr class="table-headers">
+              <th>Location</th>
+              <th>Humidity 9 am</th>
+              <th>Humidity 3 pm</th>
+            </tr>
+          </thead>
+          <tbody id="locTableBodyHum"></tbody>
         </table>
-    </div>
-    <!-- Humidity plot -->
-    <div class="col-md-6">
-      <table id="stateTableHum" class="table table-borderless table-striped table-earning">
+      </div>
+      <!-- Humidity plot -->
+      <div class="col-md-6">
+        <table id="stateTableHum" class="table table-borderless table-striped table-earning">
           <caption>Average Monthly Humidity State</caption>
           <thead>
-              <tr class="table-headers">
-                  <th>State</th>
-                  <th>Humidity 9 am</th> 
-                  <th>Humidity 3 pm</th> 
-              </tr>
+            <tr class="table-headers">
+              <th>State</th>
+              <th>Humidity 9 am</th>
+              <th>Humidity 3 pm</th>
+            </tr>
           </thead>
           <tbody id="stateTableBodyHum"></tbody>
-      </table>
-    </div>
-    
-<div class="col-md-6">
-  <div class="col-md-12">
-      <div id="humidityplot"></div>
-  </div>
-</div>
-  
-</div>
+        </table>
+      </div>
 
- <!-- Add the map container here -->
- <div class="row">
-  <div class="col-md-12">
-    <div id="map"></div>
+      <div class="col-md-6">
+        <div class="col-md-12">
+          <div id="humidityplot"></div>
+        </div>
+      </div>
+
+       <!-- The quiz popup -->
+       <div id="quizPopup" class="modal">
+        <div class="modal-content">
+          <span class="close" onclick="closeQuizPopup()">&times;</span>
+          <h2>Quiz about Australia</h2>
+          <p>Test your knowledge about Australia!</p>
+          <div id="quizQuestions">
+            <h3>Question 1:</h3>
+            <p>What is the capital city of Australia?</p>
+            <ul>
+              <li><input type="radio" name="q1" value="sydney"> Sydney</li>
+              <li><input type="radio" name="q1" value="melbourne"> Melbourne</li>
+              <li><input type="radio" name="q1" value="canberra"> Canberra</li>
+              <li><input type="radio" name="q1" value="perth"> Perth</li>
+            </ul>
+      
+            <h3>Question 2:</h3>
+            <p>Which famous coral reef is located off the coast of Queensland, Australia?</p>
+            <ul>
+              <li><input type="radio" name="q2" value="great_barrier_reef"> Great Barrier Reef</li>
+              <li><input type="radio" name="q2" value="coral_sea_reef"> Coral Sea Reef</li>
+              <li><input type="radio" name="q2" value="tasman_reef"> Tasman Reef</li>
+              <li><input type="radio" name="q2" value="ningaloo_reef"> Ningaloo Reef</li>
+            </ul>
+      
+            <h3>Question 3:</h3>
+            <p>Which famous rock formation is located in the Northern Territory of Australia?</p>
+            <ul>
+              <li><input type="radio" name="q3" value="ayers_rock"> Ayers Rock</li>
+              <li><input type="radio" name="q3" value="uluru"> Uluru</li>
+              <li><input type="radio" name="q3" value="kakadu_rock"> Kakadu Rock</li>
+              <li><input type="radio" name="q3" value="red_rock"> Red Rock</li>
+            </ul>
+          </div>
+          <button onclick="submitQuiz()">Submit Quiz</button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Add the map container here -->
+    <div class="row">
+      <div class="col-md-12">
+        <div id="map"></div>
+      </div>
+    </div>
   </div>
-</div>
-</div>
 
   <!-- Include JavaScript libraries -->
   <script src="https://d3js.org/d3.v7.min.js"></script>
@@ -222,8 +304,63 @@
     // Initialize the Leaflet map
     var map = L.map('map').setView([-27, 133], 4);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
+
+    // Function to open the quiz popup
+    function openQuizPopup() {
+      document.getElementById('quizPopup').style.display = "block";
+    }
+
+    // Function to close the quiz popup
+    function closeQuizPopup() {
+      document.getElementById('quizPopup').style.display = "none";
+    }
+
+    // Function to submit the quiz
+    function submitQuiz() {
+  // Define the correct answers for each question
+  var correctAnswers = {
+    q1: "canberra",
+    q2: "great_barrier_reef",
+    q3: "uluru"
+  };
+
+  // Get the selected answers for each question
+  var answer1 = document.querySelector('input[name="q1"]:checked');
+  var answer2 = document.querySelector('input[name="q2"]:checked');
+  var answer3 = document.querySelector('input[name="q3"]:checked');
+
+  // Check if all questions are answered
+  if (!answer1 || !answer2 || !answer3) {
+    alert("Please answer all questions before submitting.");
+    return;
+  }
+
+  // Get the values of the selected answers
+  var selectedAnswer1 = answer1.value;
+  var selectedAnswer2 = answer2.value;
+  var selectedAnswer3 = answer3.value;
+
+  // Check the selected answers against the correct answers
+  var score = 0;
+  if (selectedAnswer1 === correctAnswers.q1) {
+    score++;
+  }
+  if (selectedAnswer2 === correctAnswers.q2) {
+    score++;
+  }
+  if (selectedAnswer3 === correctAnswers.q3) {
+    score++;
+  }
+
+  // Display the score to the user
+  alert("You scored " + score + " out of 3!");
+
+  // Close the quiz popup
+  closeQuizPopup();
+}
   </script>
 </body>
+
 </html>
