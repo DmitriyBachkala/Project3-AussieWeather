@@ -293,12 +293,12 @@ function addBarCharts(selectedMonth, weatherType) {
                 width: 500,
                 height: 1500,
                 yaxis: {
-                    // ticktext: cityLocation.sort().reverse(),
                     automargin: true,
+                    //Make the the graph display the cities in the same order as the first chart
                     autorange: 'reversed'
-
                 },
                 xaxis: {
+                    //Display the x ticks at the top of the chart
                     side: 'top',
                     autorange: 'reversed'
                 },
@@ -311,7 +311,6 @@ function addBarCharts(selectedMonth, weatherType) {
                     t: 100,
                     pad: 1
                 },
-                // legend:{'traceorder':'reversed'}
             };
 
             // The data array consists of both humidity traces
@@ -342,7 +341,15 @@ function addBarCharts(selectedMonth, weatherType) {
                 x: mornW,
                 type: "bar",
                 name: "Morning Wind Speed",
-                orientation: 'h'
+                orientation: 'h',
+                marker: {
+                    color: '#91e3ff',
+                    opacity: .7,
+                    line: {
+                        color: '#00040a',
+                        width: 1
+                    }
+                }
             };
 
             let afternoonW = {
@@ -350,7 +357,15 @@ function addBarCharts(selectedMonth, weatherType) {
                 x: aftW,
                 type: "bar",
                 name: "Afternoon Wind Speed",
-                orientation: 'h'
+                orientation: 'h',
+                marker: {
+                    color: '#3964b3',
+                    opacity: .7,
+                    line: {
+                        color: '#00040a',
+                        width: 1
+                    }
+                } 
             };
 
             // Apply a title to the layout
@@ -362,13 +377,13 @@ function addBarCharts(selectedMonth, weatherType) {
                 width: 500,
                 height: 1500,
                 yaxis: {
-                    // title: "Location",
-                    ticktext: cityLocation.sort().reverse(),
-                    automargin: true
-
+                    automargin: true,
+                    //Make the the graph display the cities in the same order as the first chart
+                    autorange: 'reversed'
                 },
                 xaxis: {
-                    side: 'top'
+                    side: 'top',
+                    autorange: 'reversed'
                 },
                 margin: {
                     width: 200,
@@ -379,11 +394,10 @@ function addBarCharts(selectedMonth, weatherType) {
                     t: 100,
                     pad: 1
                 },
-                legend:{'traceorder':'reversed'}
             };
 
             // The data array consists of both Wind traces
-            let chartInfo = [afternoonW, morningW];
+            let chartInfo = [morningW, afternoonW];
             // Plot the wind chart
             Plotly.newPlot("windplot", chartInfo, layout);
         });
@@ -405,21 +419,35 @@ function addBarCharts(selectedMonth, weatherType) {
             }
 
             // Create traces for Temperature data
-
-            let afternoonT = {
-                y: cityLocation,
-                x: aftT,
-                type: "bar",
-                name: "Afternoon Temp",
-                orientation: 'h'
-            };
             let morningT = {
                 y: cityLocation,
                 x: mornT,
                 type: "bar",
                 name: "Morning Temp ",
                 orientation: 'h',
-                color: 'red'
+                marker: {
+                    color: '#91e3ff',
+                    opacity: .7,
+                    line: {
+                        color: '#00040a',
+                        width: 1
+                    }
+                }
+            };
+            let afternoonT = {
+                y: cityLocation,
+                x: aftT,
+                type: "bar",
+                name: "Afternoon Temp",
+                orientation: 'h',
+                marker: {
+                    color: '#3964b3',
+                    opacity: .7,
+                    line: {
+                        color: '#00040a',
+                        width: 1
+                    }
+                } 
             };
 
             // Apply a title to the layout
@@ -431,12 +459,13 @@ function addBarCharts(selectedMonth, weatherType) {
                 width: 500,
                 height: 1500,
                 yaxis: {
-                    title: "Location",
-                    ticktext: cityLocation.sort().reverse(),
-                    automargin: true
+                    // ticktext: cityLocation.sort().reverse(),
+                    automargin: true,
+                    autorange: 'reversed'
                 },
                 xaxis: {
-                    side: 'top'
+                    side: 'top',
+                    autorange: 'reversed'
                 },
                 margin: {
                     width: 200,
@@ -447,11 +476,11 @@ function addBarCharts(selectedMonth, weatherType) {
                     t: 100,
                     pad: 1
                 },
-                legend:{'traceorder':'reversed'}
+                // legend:{'traceorder':'reversed'}
             };
 
             // The data array consists of both temperature traces
-            let chartInfo = [afternoonT, morningT];
+            let chartInfo = [morningT, afternoonT];
             // Plot the temperature chart
             Plotly.newPlot("tempplot", chartInfo, layout);
         });
