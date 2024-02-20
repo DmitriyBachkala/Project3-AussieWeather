@@ -246,43 +246,7 @@
         </div>
       </div>
 
-       <!-- The quiz popup -->
-       <div id="quizPopup" class="modal">
-        <div class="modal-content">
-          <span class="close" onclick="closeQuizPopup()">&times;</span>
-          <h2>Quiz about Australia</h2>
-          <p>Test your knowledge about Australia!</p>
-          <div id="quizQuestions">
-            <h3>Question 1:</h3>
-            <p>What is the capital city of Australia?</p>
-            <ul>
-              <li><input type="radio" name="q1" value="sydney"> Sydney</li>
-              <li><input type="radio" name="q1" value="melbourne"> Melbourne</li>
-              <li><input type="radio" name="q1" value="canberra"> Canberra</li>
-              <li><input type="radio" name="q1" value="perth"> Perth</li>
-            </ul>
-      
-            <h3>Question 2:</h3>
-            <p>Which famous coral reef is located off the coast of Queensland, Australia?</p>
-            <ul>
-              <li><input type="radio" name="q2" value="great_barrier_reef"> Great Barrier Reef</li>
-              <li><input type="radio" name="q2" value="coral_sea_reef"> Coral Sea Reef</li>
-              <li><input type="radio" name="q2" value="tasman_reef"> Tasman Reef</li>
-              <li><input type="radio" name="q2" value="ningaloo_reef"> Ningaloo Reef</li>
-            </ul>
-      
-            <h3>Question 3:</h3>
-            <p>Which famous rock formation is located in the Northern Territory of Australia?</p>
-            <ul>
-              <li><input type="radio" name="q3" value="ayers_rock"> Ayers Rock</li>
-              <li><input type="radio" name="q3" value="uluru"> Uluru</li>
-              <li><input type="radio" name="q3" value="kakadu_rock"> Kakadu Rock</li>
-              <li><input type="radio" name="q3" value="red_rock"> Red Rock</li>
-            </ul>
-          </div>
-          <button onclick="submitQuiz()">Submit Quiz</button>
-        </div>
-      </div>
+
 
     </div>
 
@@ -292,12 +256,26 @@
         <div id="map"></div>
       </div>
     </div>
+
+    <div id="quiz" class="modal">
+      <div class="modal-content">
+        <span class="close" onclick="closeQuizPopup()">&times;</span>
+        <h2>Quiz</h2>
+        <div id="question"></div>
+        <div id="answers"></div>
+        <button id="submit">Submit</button>
+        <div id="result"></div>
+      </div>
+    </div>
+
+
   </div>
 
   <!-- Include JavaScript libraries -->
   <script src="https://d3js.org/d3.v7.min.js"></script>
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
   <script src="./static/js/app.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <!-- Leaflet JavaScript -->
   <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
   <script>
@@ -307,60 +285,114 @@
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
 
-    // Function to open the quiz popup
-    function openQuizPopup() {
-      document.getElementById('quizPopup').style.display = "block";
-    }
-
-    // Function to close the quiz popup
-    function closeQuizPopup() {
-      document.getElementById('quizPopup').style.display = "none";
-    }
-
-    // Function to submit the quiz
-    function submitQuiz() {
-  // Define the correct answers for each question
-  var correctAnswers = {
-    q1: "canberra",
-    q2: "great_barrier_reef",
-    q3: "uluru"
-  };
-
-  // Get the selected answers for each question
-  var answer1 = document.querySelector('input[name="q1"]:checked');
-  var answer2 = document.querySelector('input[name="q2"]:checked');
-  var answer3 = document.querySelector('input[name="q3"]:checked');
-
-  // Check if all questions are answered
-  if (!answer1 || !answer2 || !answer3) {
-    alert("Please answer all questions before submitting.");
-    return;
+    
+   
+  </script>
+ 
+ 
+<script>
+  // Quiz questions and answers
+  var questions = [
+  {
+    question: "What is the capital of Australia?",
+    answers: ["Sydney", "Melbourne", "Canberra", "Perth"],
+    correctAnswer: "Canberra"
+  },
+  {
+    question: "Which animal is native to Australia?",
+    answers: ["Panda", "Kangaroo", "Penguin", "Elephant"],
+    correctAnswer: "Kangaroo"
+  },
+  {
+    question: "What is the largest city in Australia?",
+    answers: ["Sydney", "Melbourne", "Brisbane", "Perth"],
+    correctAnswer: "Sydney"
+  },
+  {
+    question: "What is the national flower of Australia?",
+    answers: ["Rose", "Lily", "Wattle", "Daisy"],
+    correctAnswer: "Wattle"
+  },
+  {
+    question: "Which Australian state is known as the 'Sunshine State'?",
+    answers: ["Queensland", "New South Wales", "Victoria", "Western Australia"],
+    correctAnswer: "Queensland"
+  },
+  {
+    question: "What is the famous natural landmark in the Northern Territory of Australia?",
+    answers: ["Great Barrier Reef", "Uluru", "Sydney Opera House", "Great Ocean Road"],
+    correctAnswer: "Uluru"
+  },
+  {
+    question: "Which Australian city hosted the 2000 Summer Olympics?",
+    answers: ["Sydney", "Melbourne", "Brisbane", "Perth"],
+    correctAnswer: "Sydney"
+  },
+  {
+    question: "What is the currency of Australia?",
+    answers: ["Dollar", "Peso", "Euro", "Yen"],
+    correctAnswer: "Dollar"
+  },
+  {
+    question: "Which Australian animal can lay eggs?",
+    answers: ["Koala", "Kangaroo", "Platypus", "Wombat"],
+    correctAnswer: "Platypus"
+  },
+  {
+    question: "Which Australian landmark is known for its opera performances?",
+    answers: ["Sydney Opera House", "Uluru", "Great Barrier Reef", "Great Ocean Road"],
+    correctAnswer: "Sydney Opera House"
   }
+];
 
-  // Get the values of the selected answers
-  var selectedAnswer1 = answer1.value;
-  var selectedAnswer2 = answer2.value;
-  var selectedAnswer3 = answer3.value;
-
-  // Check the selected answers against the correct answers
+  var currentQuestion = 0;
   var score = 0;
-  if (selectedAnswer1 === correctAnswers.q1) {
-    score++;
-  }
-  if (selectedAnswer2 === correctAnswers.q2) {
-    score++;
-  }
-  if (selectedAnswer3 === correctAnswers.q3) {
-    score++;
+
+  // Function to display the current question
+  function displayQuestion() {
+    $("#question").text(questions[currentQuestion].question);
+    var answersHtml = "";
+    for (var i = 0; i < questions[currentQuestion].answers.length; i++) {
+      answersHtml += '<input type="radio" name="answer" value="' + questions[currentQuestion].answers[i] + '">' + questions[currentQuestion].answers[i] + '<br>';
+    }
+    $("#answers").html(answersHtml);
   }
 
-  // Display the score to the user
-  alert("You scored " + score + " out of 3!");
+  // Function to check the answer
+  function checkAnswer() {
+    var selectedAnswer = $("input[name='answer']:checked").val();
+    if (selectedAnswer === questions[currentQuestion].correctAnswer) {
+      score++;
+    }
+    currentQuestion++;
+    if (currentQuestion < questions.length) {
+      displayQuestion();
+    } else {
+      // Display the score without hiding the modal
+      $("#result").text("You scored " + score + " out of " + questions.length);
+      // Optionally, reset the quiz here if you want to allow retakes
+      // currentQuestion = 0;
+      // score = 0;
+    }
+  }
+
+  // Open the quiz popup
+  function openQuizPopup() {
+    $("#quiz").show();
+    displayQuestion();
+  }
 
   // Close the quiz popup
-  closeQuizPopup();
-}
-  </script>
+  function closeQuizPopup() {
+    $("#quiz").hide();
+  }
+
+  // Event handler for submit button
+  $(document).on("click", "#submit", function() {
+    checkAnswer();
+  });
+</script>
+
 </body>
 
 </html>
