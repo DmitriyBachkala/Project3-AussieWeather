@@ -29,21 +29,58 @@
       position: relative;
       z-index: 1; /* Ensure other content appears above the video */
     }
+
+    /* Style the quiz popup */
+    .modal {
+      display: none; /* Hidden by default */
+      position: fixed; /* Stay in place */
+      z-index: 1; /* Sit on top */
+      left: 0;
+      top: 0;
+      width: 100%; /* Full width */
+      height: 100%; /* Full height */
+      overflow: auto; /* Enable scroll if needed */
+      background-color: rgba(0, 0, 0, 0.4); /* Black with opacity */
+    }
+
+    /* Style the quiz popup content */
+    .modal-content {
+      background-color: #fefefe;
+      margin: 15% auto; /* 15% from the top and centered */
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%; /* Could be more or less, depending on screen size */
+    }
+
+    /* Style the close button */
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+      color: black;
+      text-decoration: none;
+      cursor: pointer;
+    }
   </style>
 </head>
 
 <body>
 
-    <!-- Video Background -->
-    <video id="bg-video" autoplay muted loop>
-      <source src="aussie.mp4" type="video/mp4">
-      Your browser does not support the video tag.
-    </video>
+  <!-- Video Background -->
+  <video id="bg-video" autoplay muted loop>
+    <source src="aussie.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
   <div class="container">
     <div class="row">
       <div class="col-md-12 jumbotron text-center">
         <h1>Aussie Weather</h1>
-        <p>When is the best time of year for your adventure downunder?</p>
+        <p>When is the best time of year for your adventure down under?</p>
       </div>
     </div>
     <!-- Rain -->
@@ -60,7 +97,15 @@
           <select id="selWeatherType" onchange="optionChanged(document.getElementById('selDataset').value, this.value)"></select>
         </div>
       </div>
+      <div class="col-md-4">
+        <div class="well">
+          <button onclick="openQuizPopup()">Take Quiz</button>
+        </div>
+      </div>
     </div>
+
+   
+
     <div class="row">
       <div class="col-md-6">
         <table id="locTableRain" class="table table-borderless table-striped table-earning">
@@ -90,7 +135,7 @@
         </table>
       </div>
     </div>
-      <!-- Temp -->
+    <!-- Temp -->
     <div class="row">
       <div class="col-md-6">
         <table id="locTableTemp" class="table table-borderless table-striped table-earning">
@@ -114,7 +159,7 @@
             <tr class="table-headers">
               <th>State</th>
               <th>Min Temp (°C)</th>
-              <th>Max Temp (°C)</th> 
+              <th>Max Temp (°C)</th>
               <th>Min Temp (°F)</th>
               <th>Max Temp (°F)</th>
             </tr>
@@ -124,106 +169,230 @@
       </div>
       <div class="col-md-6">
         <div class="col-md-12">
-            <div id="tempplot"></div>
+          <div id="tempplot"></div>
         </div>
       </div>
     </div>
 
-   <!-- Wind -->
-   <div class="row">
-    <div class="col-md-6">
-      <table id="locTableWind" class="table table-borderless table-striped table-earning">
-        <caption>Average Monthly Strongest Windspeed Location</caption>
-        <thead>
-          <tr class="table-headers">
-            <th>Location</th>
-            <th>Speed (km/h)</th>
-            <th>Speed (mph)</th> 
-          </tr>
-        </thead>
-        <tbody id="locTableBodyWind"></tbody>
-      </table>
-    </div>
-    <div class="col-md-6">
-      <table id="stateTableWind" class="table table-borderless table-striped table-earning">
-        <caption>Average Monthly Strongest Windspeed State</caption>
-        <thead>
-          <tr class="table-headers">
-            <th>State</th>
-            <th>Speed (km/h)</th>
-            <th>Speed (mph)</th> 
-          </tr>
-        </thead>
-        <tbody id="stateTableBodyWind"></tbody>
-      </table>
-    </div>
+    <!-- Wind -->
+    <div class="row">
+      <div class="col-md-6">
+        <table id="locTableWind" class="table table-borderless table-striped table-earning">
+          <caption>Average Monthly Strongest Windspeed Location</caption>
+          <thead>
+            <tr class="table-headers">
+              <th>Location</th>
+              <th>Speed (km/h)</th>
+              <th>Speed (mph)</th>
+            </tr>
+          </thead>
+          <tbody id="locTableBodyWind"></tbody>
+        </table>
+      </div>
+      <div class="col-md-6">
+        <table id="stateTableWind" class="table table-borderless table-striped table-earning">
+          <caption>Average Monthly Strongest Windspeed State</caption>
+          <thead>
+            <tr class="table-headers">
+              <th>State</th>
+              <th>Speed (km/h)</th>
+              <th>Speed (mph)</th>
+            </tr>
+          </thead>
+          <tbody id="stateTableBodyWind"></tbody>
+        </table>
+      </div>
 
-    <div class="col-md-6">
-      <div class="col-md-12">
+      <div class="col-md-6">
+        <div class="col-md-12">
           <div id="windplot"></div>
+        </div>
       </div>
     </div>
 
-  </div>
-
-   <!-- Hum -->
-   <div class="row">
-    <div class="col-md-6">
+    <!-- Hum -->
+    <div class="row">
+      <div class="col-md-6">
         <table id="locTableHum" class="table table-borderless table-striped table-earning">
-            <caption>Average Monthly Humidity Location</caption>
-            <thead>
-                <tr class="table-headers">
-                    <th>Location</th>
-                    <th>Humidity 9 am</th> 
-                    <th>Humidity 3 pm</th> 
-                </tr>
-            </thead>
-            <tbody id="locTableBodyHum"></tbody>
+          <caption>Average Monthly Humidity Location</caption>
+          <thead>
+            <tr class="table-headers">
+              <th>Location</th>
+              <th>Humidity 9 am</th>
+              <th>Humidity 3 pm</th>
+            </tr>
+          </thead>
+          <tbody id="locTableBodyHum"></tbody>
         </table>
-    </div>
-    <!-- Humidity plot -->
-    <div class="col-md-6">
-      <table id="stateTableHum" class="table table-borderless table-striped table-earning">
+      </div>
+      <!-- Humidity plot -->
+      <div class="col-md-6">
+        <table id="stateTableHum" class="table table-borderless table-striped table-earning">
           <caption>Average Monthly Humidity State</caption>
           <thead>
-              <tr class="table-headers">
-                  <th>State</th>
-                  <th>Humidity 9 am</th> 
-                  <th>Humidity 3 pm</th> 
-              </tr>
+            <tr class="table-headers">
+              <th>State</th>
+              <th>Humidity 9 am</th>
+              <th>Humidity 3 pm</th>
+            </tr>
           </thead>
           <tbody id="stateTableBodyHum"></tbody>
-      </table>
-    </div>
-    
-<div class="col-md-6">
-  <div class="col-md-12">
-      <div id="humidityplot"></div>
-  </div>
-</div>
-  
-</div>
+        </table>
+      </div>
 
- <!-- Add the map container here -->
- <div class="row">
-  <div class="col-md-12">
-    <div id="map"></div>
+      <div class="col-md-6">
+        <div class="col-md-12">
+          <div id="humidityplot"></div>
+        </div>
+      </div>
+
+
+
+    </div>
+
+    <!-- Add the map container here -->
+    <div class="row">
+      <div class="col-md-12">
+        <div id="map"></div>
+      </div>
+    </div>
+
+    <div id="quiz" class="modal">
+      <div class="modal-content">
+        <span class="close" onclick="closeQuizPopup()">&times;</span>
+        <h2>Quiz</h2>
+        <div id="question"></div>
+        <div id="answers"></div>
+        <button id="submit">Submit</button>
+        <div id="result"></div>
+      </div>
+    </div>
+
+
   </div>
-</div>
-</div>
 
   <!-- Include JavaScript libraries -->
   <script src="https://d3js.org/d3.v7.min.js"></script>
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
   <script src="./static/js/app.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <!-- Leaflet JavaScript -->
   <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
   <script>
     // Initialize the Leaflet map
     var map = L.map('map').setView([-27, 133], 4);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
+
+    
+   
   </script>
+ 
+ 
+<script>
+  // Quiz questions and answers
+  var questions = [
+  {
+    question: "What is the capital of Australia?",
+    answers: ["Sydney", "Melbourne", "Canberra", "Perth"],
+    correctAnswer: "Canberra"
+  },
+  {
+    question: "Which animal is native to Australia?",
+    answers: ["Panda", "Kangaroo", "Penguin", "Elephant"],
+    correctAnswer: "Kangaroo"
+  },
+  {
+    question: "What is the largest city in Australia?",
+    answers: ["Sydney", "Melbourne", "Brisbane", "Perth"],
+    correctAnswer: "Sydney"
+  },
+  {
+    question: "What is the national flower of Australia?",
+    answers: ["Rose", "Lily", "Wattle", "Daisy"],
+    correctAnswer: "Wattle"
+  },
+  {
+    question: "Which Australian state is known as the 'Sunshine State'?",
+    answers: ["Queensland", "New South Wales", "Victoria", "Western Australia"],
+    correctAnswer: "Queensland"
+  },
+  {
+    question: "What is the famous natural landmark in the Northern Territory of Australia?",
+    answers: ["Great Barrier Reef", "Uluru", "Sydney Opera House", "Great Ocean Road"],
+    correctAnswer: "Uluru"
+  },
+  {
+    question: "Which Australian city hosted the 2000 Summer Olympics?",
+    answers: ["Sydney", "Melbourne", "Brisbane", "Perth"],
+    correctAnswer: "Sydney"
+  },
+  {
+    question: "What is the currency of Australia?",
+    answers: ["Dollar", "Peso", "Euro", "Yen"],
+    correctAnswer: "Dollar"
+  },
+  {
+    question: "Which Australian animal can lay eggs?",
+    answers: ["Koala", "Kangaroo", "Platypus", "Wombat"],
+    correctAnswer: "Platypus"
+  },
+  {
+    question: "Which Australian landmark is known for its opera performances?",
+    answers: ["Sydney Opera House", "Uluru", "Great Barrier Reef", "Great Ocean Road"],
+    correctAnswer: "Sydney Opera House"
+  }
+];
+
+  var currentQuestion = 0;
+  var score = 0;
+
+  // Function to display the current question
+  function displayQuestion() {
+    $("#question").text(questions[currentQuestion].question);
+    var answersHtml = "";
+    for (var i = 0; i < questions[currentQuestion].answers.length; i++) {
+      answersHtml += '<input type="radio" name="answer" value="' + questions[currentQuestion].answers[i] + '">' + questions[currentQuestion].answers[i] + '<br>';
+    }
+    $("#answers").html(answersHtml);
+  }
+
+  // Function to check the answer
+  function checkAnswer() {
+    var selectedAnswer = $("input[name='answer']:checked").val();
+    if (selectedAnswer === questions[currentQuestion].correctAnswer) {
+      score++;
+    }
+    currentQuestion++;
+    if (currentQuestion < questions.length) {
+      displayQuestion();
+    } else {
+      // Display the score without hiding the modal
+      $("#result").text("You scored " + score + " out of " + questions.length);
+      // Optionally, reset the quiz here if you want to allow retakes
+      // currentQuestion = 0;
+      // score = 0;
+    }
+  }
+
+  // Open the quiz popup
+  function openQuizPopup() {
+    $("#quiz").show();
+    displayQuestion();
+  }
+
+  // Close the quiz popup
+  function closeQuizPopup() {
+    $("#quiz").hide();
+  }
+
+  // Event handler for submit button
+  $(document).on("click", "#submit", function() {
+    checkAnswer();
+  });
+</script>
+
 </body>
+
 </html>
