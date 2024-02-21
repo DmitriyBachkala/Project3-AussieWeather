@@ -2,7 +2,7 @@
 let location_summary = "/Data/location_summary.json";
 let locationData = "../Data/location.json";
 let RainyDays = "/Data/rainydays.json";
-const state_summary = "/Data/state_summary.json";
+let state_summary = "../Data/state_summary.json";
 
 let weatherType = "Rain"; // Initialize weatherType with "Rain"
 
