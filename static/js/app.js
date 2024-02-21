@@ -6,7 +6,7 @@ let state_summary = "./Data/state_summary.json";
 let weatherType = "Rain"; // Initialize weatherType with "Rain"
 
 // Fetch the JSON data and console log it
-d3.json(stateSummary).then(function(result) {
+d3.json(state_summary).then(function(result) {
     data = result;
     console.log(data);
     updateDropdown(); // Call the function after data is fetched
