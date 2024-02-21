@@ -68,7 +68,7 @@ function populateData(selectedMonth, weatherType) {
         d3.json(state_summary).then((data) => {
             let months = data.filter(state => state.Month === selectedMonth);
 
-            months.sort((a, b) => a.state.localeCompare(b.state));
+             
 
 
             let body = d3.select("#stateTableBodyRain");
@@ -120,7 +120,7 @@ function populateData(selectedMonth, weatherType) {
         });
         d3.json(state_summary).then((data) => {
             let months = data.filter(state => state.Month === selectedMonth);
-            months.sort((a, b) => a.state.localeCompare(b.state));
+           
             let body = d3.select("#stateTableBodyTemp");
             body.html("");
             months.forEach(month => {
@@ -172,7 +172,7 @@ function populateData(selectedMonth, weatherType) {
         });
         d3.json(state_summary).then((data) => {
             let months = data.filter(state => state.Month === selectedMonth);
-            months.sort((a, b) => a.state.localeCompare(b.state));
+            
             let body = d3.select("#stateTableBodyWind");
             body.html("");
             months.forEach(month => {
@@ -205,7 +205,7 @@ function populateData(selectedMonth, weatherType) {
         // Use d3.json to fetch JSON data for temperature
         d3.json(location_summary).then((data) => {
             let months = data.filter(process => process.Month === selectedMonth);
-            months.sort((a, b) => a.state.localeCompare(b.state));
+            months.sort((a, b) => a.Location.localeCompare(b.Location));
             let body = d3.select("#locTableBodyHum"); // Corrected selector here
             body.html("");
             months.forEach(month => {
@@ -217,7 +217,7 @@ function populateData(selectedMonth, weatherType) {
         });
         d3.json(state_summary).then((data) => {
             let months = data.filter(state => state.Month === selectedMonth);
-            months.sort((a, b) => a.Location.localeCompare(b.Location));
+             
             let body = d3.select("#stateTableBodyHum");
             body.html("");
             months.forEach(month => {
