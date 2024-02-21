@@ -51,6 +51,9 @@ function populateData(selectedMonth, weatherType) {
         // Show rain tables and populate rain data
         d3.json(RainyDays).then((data) => {
             let months = data.filter(process => process.Month === selectedMonth);
+            months.sort((a, b) => a.Location.localeCompare(b.Location));
+
+
             let body = d3.select("#locTableBodyRain");
             body.html("");
             months.forEach(month => {
@@ -64,6 +67,10 @@ function populateData(selectedMonth, weatherType) {
 
         d3.json(state_summary).then((data) => {
             let months = data.filter(state => state.Month === selectedMonth);
+
+            months.sort((a, b) => a.Location.localeCompare(b.Location));
+
+
             let body = d3.select("#stateTableBodyRain");
             body.html("");
             months.forEach(month => {
@@ -96,6 +103,10 @@ function populateData(selectedMonth, weatherType) {
         // Use d3.json to fetch JSON data for temperature
         d3.json(location_summary).then((data) => {
             let months = data.filter(process => process.Month === selectedMonth);
+
+            months.sort((a, b) => a.Location.localeCompare(b.Location));
+
+
             let body = d3.select("#locTableBodyTemp");
             body.html("");
             months.forEach(month => {
@@ -109,6 +120,7 @@ function populateData(selectedMonth, weatherType) {
         });
         d3.json(state_summary).then((data) => {
             let months = data.filter(state => state.Month === selectedMonth);
+            months.sort((a, b) => a.Location.localeCompare(b.Location));
             let body = d3.select("#stateTableBodyTemp");
             body.html("");
             months.forEach(month => {
@@ -143,7 +155,8 @@ function populateData(selectedMonth, weatherType) {
         // Use d3.json to fetch JSON data for temperature
         d3.json(location_summary).then((data) => {
             let months = data.filter(process => process.Month === selectedMonth);
-            let body = d3.select("#locTableBodyWind"); // Corrected selector here
+            months.sort((a, b) => a.Location.localeCompare(b.Location));
+            let body = d3.select("#locTableBodyWind");  
             body.html("");
             months.forEach(month => {
                 let row = body.append('tr');
@@ -159,6 +172,7 @@ function populateData(selectedMonth, weatherType) {
         });
         d3.json(state_summary).then((data) => {
             let months = data.filter(state => state.Month === selectedMonth);
+            months.sort((a, b) => a.Location.localeCompare(b.Location));
             let body = d3.select("#stateTableBodyWind");
             body.html("");
             months.forEach(month => {
@@ -191,6 +205,7 @@ function populateData(selectedMonth, weatherType) {
         // Use d3.json to fetch JSON data for temperature
         d3.json(location_summary).then((data) => {
             let months = data.filter(process => process.Month === selectedMonth);
+            months.sort((a, b) => a.Location.localeCompare(b.Location));
             let body = d3.select("#locTableBodyHum"); // Corrected selector here
             body.html("");
             months.forEach(month => {
@@ -202,6 +217,7 @@ function populateData(selectedMonth, weatherType) {
         });
         d3.json(state_summary).then((data) => {
             let months = data.filter(state => state.Month === selectedMonth);
+            months.sort((a, b) => a.Location.localeCompare(b.Location));
             let body = d3.select("#stateTableBodyHum");
             body.html("");
             months.forEach(month => {
@@ -237,6 +253,7 @@ function addBarCharts(selectedMonth, weatherType) {
         d3.json(location_summary).then((data) => {
             //filter by the month selected
             let barMonths = data.filter(results => results.Month === selectedMonth);
+            barMonths.sort((a, b) => a.Location.localeCompare(b.Location));
             console.log(barMonths);
 
             //select all of the cities
@@ -322,6 +339,7 @@ function addBarCharts(selectedMonth, weatherType) {
         d3.json(location_summary).then((data) => {
             //filter by the month selected
             let barMonths = data.filter(results => results.Month === selectedMonth);
+            barMonths.sort((a, b) => a.Location.localeCompare(b.Location));
             console.log(barMonths);
 
             //select all of the cities
@@ -405,6 +423,7 @@ function addBarCharts(selectedMonth, weatherType) {
         d3.json(location_summary).then((data) => {
             //filter by the month selected
             let barMonths = data.filter(results => results.Month === selectedMonth);
+            barMonths.sort((a, b) => a.Location.localeCompare(b.Location));
             console.log(barMonths);
 
             //select all of the cities
