@@ -1,7 +1,7 @@
 // Get data paths
 let location_summary = "/Data/location_summary.json";
 let RainyDays = "/Data/rainydays.json";
-let stateSummary = "/Data/state_summary.json";
+// let stateSummary = "/Data/state_summary.json";
 
 let weatherType = "Rain"; // Initialize weatherType with "Rain"
 
