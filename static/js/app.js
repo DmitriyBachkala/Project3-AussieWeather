@@ -509,7 +509,7 @@ function addBarCharts(selectedMonth, weatherType) {
 
 function updateMarkers(selectedMonth) {
     // Fetch the location summary data for markers
-    d3.json("/Data/location_summary.json").then(function(locations) {
+    d3.json("./Data/location_summary.json").then(function(locations) {
         // Clear existing markers
         map.eachLayer(function(layer) {
             if (layer instanceof L.Marker) {
